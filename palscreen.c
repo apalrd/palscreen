@@ -6,20 +6,27 @@ PalScreen user interface for PiTFT
 
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "palscreen.h"
 #include "gfx.h"
 
 //Main
 int main()
 {
+    printf("Starting GFX lib\n");
     //Init the GFX lib
     GFXInit();
+    
+    printf("GFX init complete\n");
     
     //Change the color continuously
     while(1)
     {
+        printf("Filling screen\n");
         //To test, draw a color on the screen
         GFXFillScreen(0xFFFF);
+        
+        printf("Swapping buffers");
         
         //Flip the buffers to draw this screen
         GFXSwapBuffer();

@@ -38,6 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <sys/ioctl.h>
 #include "linux/fb.h"
 #include <sys/mman.h>
+#include <stdio.h>
 #include "gfx.h"
 #include "glcdfont.c"
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
@@ -69,12 +70,15 @@ uint8_t *bbp;	//Back buffer base pointer
 //Init the display and open the buffer
 void GFXInit(void)
 {
+    printf("Attempting to open framebuffer /dev/fb1\n");
     //Open a connection to the framebuffer
     fb_fd = open("/dev/fb1",O_RDWR);
     
+    printf("Reading screen info variable\n");
     //Get variable screen information
     ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
     
+    printf("Reading screen info fixed\n");
     //Get fixed screen information
     ioctl(fb_fd, FBIOGET_FSCREENINFO, &finfo);
     
@@ -89,12 +93,21 @@ void GFXInit(void)
     //Read info back to make sure it set
     ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
     
+    //Print some info about it
+    printf("Screen configured as grey=%d Bits=%d xres=%d yres=%d r=%d g=%d b=%d\n",vinfo.grayscale,vinfo.bits_per_pixel,vinfo.xres,vinfo.yres,vinfo.red.offset,vinfo.green.offset,vinfo.blue.offset);
+    
     //Calculate screensize
     screensize = vinfo.yres_virtual * finfo.line_length;
+    
+    //Screen is how big
+    printf("Screen is %d bytes\n",screensize);
     
     //Setup mapped memory
     fbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
     bbp = fbp + screensize;
+    
+    //Got a mem pointer?
+    printf("Got a mem pointer %d and %d\n",fbp,bbp);
     
     //Setup the GFX vars
     _width = WIDTH;
