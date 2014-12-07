@@ -70,7 +70,7 @@ uint8_t *bbp;	//Back buffer base pointer
 void GFXInit(void)
 {
     //Open a connection to the framebuffer
-    fb_fd = open("/dev/fb0",O_RDWR);
+    fb_fd = open("/dev/fb1",O_RDWR);
     
     //Get variable screen information
     ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
