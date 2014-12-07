@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include "libevdev.h"
+#include <linux/input.h>
+#include "libevdev/libevdev.h"
 
 
 struct libevdev *dev = NULL;
@@ -20,7 +21,6 @@ void touch_init()
     rc = libevdev_new_from_fd(fd, &dev);
     if (rc < 0) {
         fprintf(stderr, "Failed to init libevdev (%d)\n", rc);
-        exit();
     }
     printf("Input device name: \"%s\"\n", libevdev_get_name(dev));
     printf("Input device ID: bus %#x vendor %#x product %#x\n",
