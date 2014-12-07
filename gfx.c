@@ -150,6 +150,7 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
     long location = (x+vinfo.xoffset) + (y+vinfo.yoffset) * finfo.line_length;
     printf("Trying to draw a pixel at location %d\n",location);
+    printf("xoff=%d yoff=%d line_len=%d\n",vinfo.xoffset,vinfo.yoffset,vinfo.line_length);
     bbp[location] = color;
 }
 
