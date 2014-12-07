@@ -146,9 +146,11 @@ uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo
 //Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
 void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
-    long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
-    printf("Trying to draw a pixel at location %l\n",location);
-    *((uint16_t*)(bbp + location)) = color;
+    //vinfo.bits_per_pixel>>3
+    //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
+    long location = (x+vinfo.xoffset) + (y+vinfo.yoffset) * finfo.line_length;
+    printf("Trying to draw a pixel at location %d\n",location);
+    bbp[location] = color;
 }
 
 // Draw a circle outline
