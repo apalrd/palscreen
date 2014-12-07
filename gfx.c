@@ -99,9 +99,6 @@ void GFXInit(void)
     //Calculate screensize
     screensize = vinfo.yres_virtual * finfo.line_length;
     
-    //Screen is how big
-    printf("Screen is %d bytes\n",screensize);
-    
     //Setup mapped memory
     bbp = mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
     fbp = bbp;// + screensize;
@@ -109,9 +106,6 @@ void GFXInit(void)
     //Start panned
     //vinfo.yoffset = screensize;
     //ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
-    
-    //Got a mem pointer?
-    printf("Got a mem pointer %u and %u\n",fbp,bbp);
     
     //Setup the GFX vars
     _width = WIDTH;
@@ -154,7 +148,7 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
     //vinfo.bits_per_pixel>>3
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
-    long location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
+    int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
     //bbp[location] = color;
     uint16_t *newptr = (bbp + location);
     *newptr = color;
