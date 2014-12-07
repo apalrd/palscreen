@@ -103,12 +103,12 @@ void GFXInit(void)
     printf("Screen is %d bytes\n",screensize);
     
     //Setup mapped memory
-    bbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
-    fbp = bbp + screensize;
+    bbp = mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
+    fbp = bbp;// + screensize;
     
     //Start panned
-    vinfo.yoffset = screensize;
-    ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
+    //vinfo.yoffset = screensize;
+    //ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
     
     //Got a mem pointer?
     printf("Got a mem pointer %u and %u\n",fbp,bbp);
@@ -126,6 +126,7 @@ void GFXInit(void)
 //Swap the active buffer (draw to the screen)
 void GFXSwapBuffer()
 {
+    /*
     if (vinfo.yoffset==0)
         vinfo.yoffset = screensize;
     else
@@ -139,6 +140,7 @@ void GFXSwapBuffer()
     tmp=fbp;
     fbp=bbp;
     bbp=tmp;
+     */
 }
 
 //Convert a pixel to a color
@@ -155,7 +157,6 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     long location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
     //bbp[location] = color;
     uint16_t *newptr = (bbp + location);
-    printf("Trying to store color %d in pointer %u\n",color,newptr);
     *newptr = color;
 }
 
@@ -325,7 +326,6 @@ void GFXDrawFastVLine(int16_t x, int16_t y,
     printf("Attempting to draw a fast Vline...\n");
     for(int16_t i = 0;i<h;i++)
     {
-        printf("Attempting to draw a pixel...X=%d Y=%d\n",x,y+i);
         GFXDrawPixel(x,y+i,color);
     }
   //GFXDrawLine(x, y, x, y+h-1, color);
