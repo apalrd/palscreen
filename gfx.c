@@ -32,13 +32,14 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 
 
-#include "glcdfont.c"
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include "linux/fb.h"
 #include <sys/mman.h>
 #include "gfx.h"
+#include "glcdfont.c"
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
 
@@ -102,7 +103,7 @@ void GFXInit(void)
   cursor_y  = cursor_x    = 0;
   textsize  = 1;
   textcolor = textbgcolor = 0xFFFF;
-  wrap      = true;
+  wrap      = 1;
 }
 
 //Swap the active buffer (draw to the screen)
