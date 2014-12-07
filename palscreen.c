@@ -59,15 +59,15 @@ int main()
         GFXSwapBuffer();
         sleep(2);
         
-        GFXFillscreen(GFXPixelColor(0xFF,0x00,0x00));
+        GFXFillScreen(GFXPixelColor(0xFF,0x00,0x00));
         GFXSwapBuffer();
         sleep(2);
         
-        GFXFillscreen(GFXPixelColor(0x00,0xFF,0x00));
+        GFXFillScreen(GFXPixelColor(0x00,0xFF,0x00));
         GFXSwapBuffer();
         sleep(2);
         
-        GFXFillscreen(GFXPixelColor(0xFF,0x80,0x00));
+        GFXFillScreen(GFXPixelColor(0xFF,0x80,0x00));
         GFXSwapBuffer();
         sleep(2);
     }
