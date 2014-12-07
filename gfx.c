@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "glcdfont.c"
 #include <sys/types.h>
+#include "typedefs.h"
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
