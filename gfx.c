@@ -103,8 +103,12 @@ void GFXInit(void)
     printf("Screen is %d bytes\n",screensize);
     
     //Setup mapped memory
-    fbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
-    bbp = fbp;// + screensize;
+    bbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
+    fbp = bbp + screensize;
+    
+    //Start panned
+    vinfo.yoffset = screensize;
+    ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
     
     //Got a mem pointer?
     printf("Got a mem pointer %u and %u\n",fbp,bbp);
