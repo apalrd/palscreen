@@ -146,7 +146,7 @@ void GFXSwapBuffer()
 //Convert a pixel to a color
 uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b)
 {
-    return ((r>>3)<<vinfo.red.offset) | ((g>>2)<<vinfo->green.offset) | ((b>>3)<<vinfo->blue.offset);
+    return ((r>>3)<<vinfo.red.offset) | ((g>>2)<<vinfo.green.offset) | ((b>>3)<<vinfo.blue.offset);
 }
 
 //Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
