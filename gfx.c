@@ -107,7 +107,7 @@ void GFXInit(void)
     bbp = fbp + screensize;
     
     //Got a mem pointer?
-    printf("Got a mem pointer %d and %d\n",fbp,bbp);
+    printf("Got a mem pointer %u and %u\n",fbp,bbp);
     
     //Setup the GFX vars
     _width = WIDTH;
@@ -313,17 +313,28 @@ void GFXDrawRect(int16_t x, int16_t y,
 void GFXDrawFastVLine(int16_t x, int16_t y,
 				 int16_t h, uint16_t color) {
   // Update in subclasses if desired!
-  GFXDrawLine(x, y, x, y+h-1, color);
+    for(int16_t i = 0;i<h;i++)
+    {
+        GFXDrawPixel(x,y+i,color);
+    }
+  //GFXDrawLine(x, y, x, y+h-1, color);
 }
 
 void GFXDrawFastHLine(int16_t x, int16_t y,
 				 int16_t w, uint16_t color) {
   // Update in subclasses if desired!
-  GFXDrawLine(x, y, x+w-1, y, color);
+    for(int16_t i = 0;i<w;i++)
+    {
+        GFXDrawPixel(x+i,y,color);
+    }
+  //GFXDrawLine(x, y, x+w-1, y, color);
 }
 
 void GFXFillRect(int16_t x, int16_t y, int16_t w, int16_t h,
 			    uint16_t color) {
+    
+    //Tell the user what we're trying to do
+    printf("Filling screen with rectangle x=%d y=%d w=%d h=%d color=%d\n",x,y,w,h,color);
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     GFXDrawFastVLine(i, y, h, color);
