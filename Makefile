@@ -1,5 +1,5 @@
 PROG = palscreen
-SOURCES = $(PROG).c gfx.c touch.c
+SOURCES = $(PROG).c gfx.c touch.c libevdev/libevdev-names.c libevdev/libevdev-uintput.c libevdev/libevdev.c
 CFLAGS = -W -Wall -std=c99 —I=libevdev $(CFLAGS_EXTRA)
 
 all: $(SOURCES)
