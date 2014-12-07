@@ -36,6 +36,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 #include "linux/fb.h" //Linux Framebuffer interface
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 

@@ -31,7 +31,7 @@ int main()
         GFXFillScreen(0x0000);
         
         //Swap the buffers again
-        GFXSwapbuffer();
+        GFXSwapBuffer();
         
         //Wait at least a second
         sleep(2);
