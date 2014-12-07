@@ -31,7 +31,7 @@
 #include "libevdev.h"
 #include "libevdev-int.h"
 #include "libevdev-util.h"
-#include "event-names.h"
+#include "event_names.h"
 
 #define MAXEVENTS 64
 
