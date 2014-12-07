@@ -147,6 +147,7 @@ uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo
 void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
     long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
+    printf("Trying to draw a pixel at location %l\n",location);
     *((uint16_t*)(bbp + location)) = color;
 }
 
@@ -313,8 +314,10 @@ void GFXDrawRect(int16_t x, int16_t y,
 void GFXDrawFastVLine(int16_t x, int16_t y,
 				 int16_t h, uint16_t color) {
   // Update in subclasses if desired!
+    printf("Attempting to draw a fast Vline...\n");
     for(int16_t i = 0;i<h;i++)
     {
+        printf("Attempting to draw a pixel...\n");
         GFXDrawPixel(x,y+i,color);
     }
   //GFXDrawLine(x, y, x, y+h-1, color);
