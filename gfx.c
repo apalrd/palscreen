@@ -323,7 +323,6 @@ void GFXDrawRect(int16_t x, int16_t y,
 void GFXDrawFastVLine(int16_t x, int16_t y,
 				 int16_t h, uint16_t color) {
   // Update in subclasses if desired!
-    printf("Attempting to draw a fast Vline...\n");
     for(int16_t i = 0;i<h;i++)
     {
         GFXDrawPixel(x,y+i,color);
