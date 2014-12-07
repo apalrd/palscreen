@@ -37,6 +37,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include "linux/fb.h"
+#include <sys/mman.h>
 #include "gfx.h"
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
@@ -59,7 +60,7 @@ struct fb_fix_screeninfo finfo;
 struct fb_var_screeninfo vinfo;
 int fb_fd;
 long screensize;
-uint8_t *fbp,	//Front buffer base pointer
+uint8_t *fbp;	//Front buffer base pointer
 uint8_t *bbp;	//Back buffer base pointer
 
 
