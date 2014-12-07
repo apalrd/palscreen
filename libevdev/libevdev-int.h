@@ -23,7 +23,6 @@
 #ifndef LIBEVDEV_INT_H
 #define LIBEVDEV_INT_H
 
-#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

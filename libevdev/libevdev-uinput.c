@@ -20,7 +20,6 @@
  * OF THIS SOFTWARE.
  */
 
-#include <config.h>
 #include <fcntl.h>
 #include <poll.h>
 #include <errno.h>
