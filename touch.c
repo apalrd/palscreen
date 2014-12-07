@@ -19,8 +19,8 @@ void touch_init()
     fd = open("/dev/input/touchscreen", O_RDONLY|O_NONBLOCK);
     rc = libevdev_new_from_fd(fd, &dev);
     if (rc < 0) {
-        fprintf(stderr, "Failed to init libevdev (%s)\n", strerror(-rc));
-        exit(1);
+        fprintf(stderr, "Failed to init libevdev (%d)\n", rc);
+        exit();
     }
     printf("Input device name: \"%s\"\n", libevdev_get_name(dev));
     printf("Input device ID: bus %#x vendor %#x product %#x\n",
@@ -47,5 +47,5 @@ void touch_get_events()
                    libevdev_get_event_type_name(ev.type),
                    libevdev_get_event_code_name(ev.type, ev.code),
                    ev.value);
-    } while (rc == 1 || rc == 0 || rc == -EAGAIN);
+    } while (rc == 1 || rc == 0);
 }
