@@ -33,6 +33,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "gfx.h"
 #include "glcdfont.c"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "linux/fb.h" //Linux Framebuffer interface
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
@@ -554,7 +557,7 @@ void GFXSetTextColor(uint16_t c, uint16_t b) {
   textbgcolor = b; 
 }
 
-void GFXSetTextWrap(boolean w) {
+void GFXSetTextWrap(uint8_t w) {
   wrap = w;
 }
 
