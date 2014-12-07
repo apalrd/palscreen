@@ -26,7 +26,7 @@ int main()
         //To test, draw a color on the screen
         GFXFillScreen(0xFFFF);
         
-        printf("Swapping buffers");
+        printf("Swapping buffers\n");
         
         //Flip the buffers to draw this screen
         GFXSwapBuffer();

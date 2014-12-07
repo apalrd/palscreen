@@ -70,15 +70,13 @@ uint8_t *bbp;	//Back buffer base pointer
 //Init the display and open the buffer
 void GFXInit(void)
 {
-    printf("Attempting to open framebuffer /dev/fb1\n");
+
     //Open a connection to the framebuffer
     fb_fd = open("/dev/fb1",O_RDWR);
     
-    printf("Reading screen info variable\n");
     //Get variable screen information
     ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
     
-    printf("Reading screen info fixed\n");
     //Get fixed screen information
     ioctl(fb_fd, FBIOGET_FSCREENINFO, &finfo);
     
@@ -337,8 +335,6 @@ void GFXDrawFastHLine(int16_t x, int16_t y,
 void GFXFillRect(int16_t x, int16_t y, int16_t w, int16_t h,
 			    uint16_t color) {
     
-    //Tell the user what we're trying to do
-    printf("Filling screen with rectangle x=%d y=%d w=%d h=%d color=%d\n",x,y,w,h,color);
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     GFXDrawFastVLine(i, y, h, color);
