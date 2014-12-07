@@ -7,8 +7,16 @@ PalScreen user interface for PiTFT
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <signal.h>
 #include "palscreen.h"
 #include "gfx.h"
+
+
+
+void sign_handler(void)
+{
+    printf("Got a signal!!!");
+}
 
 //Main
 int main()
@@ -18,6 +26,9 @@ int main()
     GFXInit();
     
     printf("GFX init complete\n");
+    
+    printf("Setting signal handler\n");
+    signal(SIGBUS), sign_handler);
     
     //Change the color continuously
     while(1)
