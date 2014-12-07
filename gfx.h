@@ -1,6 +1,8 @@
 #ifndef _ADAFRUIT_GFX_H
 #define _ADAFRUIT_GFX_H
 
+#include "typedefs.h"
+
 
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
