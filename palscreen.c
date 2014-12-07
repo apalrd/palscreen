@@ -9,7 +9,7 @@ PalScreen user interface for PiTFT
 #include <stdio.h>
 #include "palscreen.h"
 #include "gfx.h"
-#include "touch.h"
+//#include "touch.h"
 
 //Main
 int main()
@@ -20,9 +20,9 @@ int main()
     
     printf("GFX init complete\n");
     
-    printf("Init touch\n");
-    touch_init();
-    printf("Touch init complete!\n");
+    //printf("Init touch\n");
+    //touch_init();
+    //printf("Touch init complete!\n");
 
 
     
@@ -72,7 +72,7 @@ int main()
         sleep(1);
         
         //Get touch events after all of that
-        touch_get_events();
+        //touch_get_events();
     }
 
 }
