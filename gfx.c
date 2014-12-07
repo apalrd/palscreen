@@ -320,7 +320,7 @@ void GFXDrawFastVLine(int16_t x, int16_t y,
     printf("Attempting to draw a fast Vline...\n");
     for(int16_t i = 0;i<h;i++)
     {
-        printf("Attempting to draw a pixel...\n");
+        printf("Attempting to draw a pixel...X=%d Y=%d\n",x,y+i);
         GFXDrawPixel(x,y+i,color);
     }
   //GFXDrawLine(x, y, x, y+h-1, color);
