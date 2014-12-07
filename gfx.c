@@ -152,7 +152,9 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     printf("Trying to draw a pixel at location %d\n",location);
     printf("xoff=%d yoff=%d line_len=%d\n",vinfo.xoffset,vinfo.yoffset,finfo.line_length);
     //bbp[location] = color;
-    *((uint16_t*)(bbp + location)) = color;
+    uint16_t *newptr = (bbp + location);
+    printf("trying new pointer %d\n",newptr);
+    newptr = color;
 }
 
 // Draw a circle outline
