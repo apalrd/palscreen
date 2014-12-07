@@ -651,6 +651,7 @@ static const char * const syn_map[SYN_MAX + 1] = {
     [SYN_CONFIG] = "SYN_CONFIG",
     [SYN_MT_REPORT] = "SYN_MT_REPORT",
     [SYN_DROPPED] = "SYN_DROPPED",
+    [SYN_MAX] = "SYN_MAX",
 };
 
 static const char * const rep_map[REP_MAX + 1] = {
