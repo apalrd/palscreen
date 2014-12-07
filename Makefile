@@ -1,5 +1,5 @@
 PROG = palscreen
-SOURCES = $(PROG).c gfx.c glcdfont.c
+SOURCES = $(PROG).c gfx.c
 CFLAGS = -W -Wall $(CFLAGS_EXTRA)
 
 all: $(SOURCES)

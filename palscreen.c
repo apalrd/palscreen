@@ -6,7 +6,8 @@ PalScreen user interface for PiTFT
 
 #include "palscreen.h"
 #include "gfx.h"
-#include "typedefs.h"
+#include <sys/types.h>
+#include <unistd.h>
 
 
 //Main

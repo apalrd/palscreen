@@ -31,13 +31,14 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "gfx.h"
+
 #include "glcdfont.c"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include "linux/fb.h" //Linux Framebuffer interface
+#include "linux/fb.h"
+#include "gfx.h"
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
 
