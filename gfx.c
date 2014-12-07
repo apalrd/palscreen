@@ -104,7 +104,7 @@ void GFXInit(void)
     
     //Setup mapped memory
     fbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
-    bbp = fbp + screensize;
+    bbp = fbp;// + screensize;
     
     //Got a mem pointer?
     printf("Got a mem pointer %u and %u\n",fbp,bbp);
