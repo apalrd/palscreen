@@ -564,7 +564,7 @@ void GFXSetTextWrap(uint8_t w) {
   wrap = w;
 }
 
-uint8_t GFXGetRotation(void) const {
+uint8_t GFXGetRotation(void) {
   return rotation;
 }
 
@@ -585,11 +585,11 @@ void GFXSetRotation(uint8_t x) {
 }
 
 // Return the size of the display (per current rotation)
-int16_t GFXWidth(void) const {
+int16_t GFXWidth(void) {
   return _width;
 }
  
-int16_t GFXHeight(void) const {
+int16_t GFXHeight(void) {
   return _height;
 }
 
