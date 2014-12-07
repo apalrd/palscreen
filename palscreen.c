@@ -4,11 +4,10 @@ Copyright 2014 Andrew Palardy
 PalScreen user interface for PiTFT
 */
 
-#include "palscreen.h"
-#include "gfx.h"
 #include <sys/types.h>
 #include <unistd.h>
-
+#include "palscreen.h"
+#include "gfx.h"
 
 //Main
 int main()

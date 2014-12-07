@@ -3,7 +3,8 @@
 
 #define swap(a, b) { int16_t t = a; a = b; b = t; }
 
-
+#include <sys/types.h>
+#include "typedefs.h"
 
 void GFXInit();
 void GFXSwapBuffer();
