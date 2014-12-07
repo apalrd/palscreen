@@ -8,7 +8,7 @@
 
 void GFXInit();
 void GFXSwapBuffer();
-uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo *vinfo);
+uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b);
 void GFXDrawPixel(int16_t x, int16_t y, uint16_t color);
 void GFXDrawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
 void GFXDrawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
