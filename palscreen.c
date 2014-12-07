@@ -28,7 +28,7 @@ int main()
     printf("GFX init complete\n");
     
     printf("Setting signal handler\n");
-    signal(SIGBUS), sign_handler);
+    signal(SIGBUS, sign_handler);
     
     //Change the color continuously
     while(1)
