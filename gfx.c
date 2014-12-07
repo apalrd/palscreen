@@ -453,7 +453,7 @@ void GFXDrawBitmap(int16_t x, int16_t y,
 // Draw a 1-bit color bitmap at the specified x, y position from the
 // provided bitmap buffer (must be PROGMEM memory) using color as the
 // foreground color and bg as the background color.
-void GFXDrawBitmap(int16_t x, int16_t y,
+void GFXDrawBitmapBit(int16_t x, int16_t y,
             const uint8_t *bitmap, int16_t w, int16_t h,
             uint16_t color, uint16_t bg) {
 
@@ -555,7 +555,7 @@ void GFXSetTextColor(uint16_t c) {
   textcolor = textbgcolor = c;
 }
 
-void GFXSetTextColor(uint16_t c, uint16_t b) {
+void GFXSetTextColorBg(uint16_t c, uint16_t b) {
   textcolor   = c;
   textbgcolor = b; 
 }

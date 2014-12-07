@@ -31,13 +31,16 @@ void GFXDrawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
 void GFXFillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
                     int16_t radius, uint16_t color);
 void GFXDrawBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
+                   int16_t w, int16_t h, uint16_t color);
+void GFXDrawBitmapBit(int16_t x, int16_t y, const uint8_t *bitmap,
                    int16_t w, int16_t h, uint16_t color, uint16_t bg);
 void GFXDrawXBitmap(int16_t x, int16_t y, const uint8_t *bitmap,
                     int16_t w, int16_t h, uint16_t color);
 void GFXDrawChar(int16_t x, int16_t y, unsigned char c, uint16_t color,
                  uint16_t bg, uint8_t size);
 void GFXSetCursor(int16_t x, int16_t y);
-void GFXSetTextColor(uint16_t c, uint16_t bg);
+void GFXSetTextColor(uint16_t c);
+void GFXSetTextColorBg(uint16_t c, uint16_t bg);
 void GFXSetTextSize(uint8_t s);
 void GFXSetTextWrap(uint8_t w);
 void GFXSetRotation(uint8_t r);
