@@ -7,8 +7,10 @@ PalScreen user interface for PiTFT
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include "libevdev.h"
 #include "palscreen.h"
 #include "gfx.h"
+#include "touch.h"
 
 //Main
 int main()
@@ -18,6 +20,12 @@ int main()
     GFXInit();
     
     printf("GFX init complete\n");
+    
+    printf("Init touch\n");
+    touch_init();
+    printf("Touch init complete!\n");
+
+
     
     //Change the color continuously
     while(1)
@@ -63,6 +71,9 @@ int main()
         GFXFillScreen(GFXPixelColor(0xFF,0xFF,0x00));
         GFXSwapBuffer();
         sleep(1);
+        
+        //Get touch events after all of that
+        touch_get_events();
     }
 
 }
