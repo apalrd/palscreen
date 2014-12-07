@@ -31,24 +31,104 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Adafruit_GFX.h"
+#include "gfx.h"
 #include "glcdfont.c"
-#ifdef __AVR__
- #include <avr/pgmspace.h>
-#else
- #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
-#endif
+#include "linux/fb.h" //Linux Framebuffer interface
+#define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 
-GFXInit(int16_t w, int16_t h):
-  WIDTH(w), HEIGHT(h)
+
+//Global variables
+//GFX variables
+int16_t WIDTH;
+int16_t HEIGHT;
+int16_t _height;
+int16_t _width;
+int16_t cursor_x;
+int16_t cursor_y;
+uint16_t textcolor;
+uint16_t textbgcolor;
+uint8_t textsize;
+uint8_t rotation;
+uint8_t wrap;
+//FB variables
+struct fb_fix_screeninfo finfo;
+struct fb_var_screeninfo vinfo;
+int fb_fd;
+long screensize;
+uint8_t *fbp,	//Front buffer base pointer
+uint8_t *bbp;	//Back buffer base pointer
+
+
+
+//Init the display and open the buffer
+void GFXInit(void)
 {
-  _width    = WIDTH;
-  _height   = HEIGHT;
+    //Open a connection to the framebuffer
+    fb_fd = open("/dev/fb0",O_RDWR);
+    
+    //Get variable screen information
+    ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
+    
+    //Get fixed screen information
+    ioctl(fb_fd, FBIOGET_FSCREENINFO, &finfo);
+    
+    //Setup the frame buffer variable info
+    vinfo.grayscale=0;
+    vinfo.bits_per_pixel=16;
+    vinfo.xres=320;
+    vinfo.yres=240;
+    WIDTH=320;
+    HEIGHT=240;
+    ioctl(fb_fd, FBIOPUT_VSCREENINFO, &vinfo);
+    //Read info back to make sure it set
+    ioctl(fb_fd, FBIOGET_VSCREENINFO, &vinfo);
+    
+    //Calculate screensize
+    screensize = vinfo.yres_virtual * finfo.line_length;
+    
+    //Setup mapped memory
+    fbp = mmap(0, screensize*2, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
+    bbp = fbp + screensize;
+    
+    //Setup the GFX vars
+    _width = WIDTH;
+    _height = HEIGHT;
   rotation  = 0;
   cursor_y  = cursor_x    = 0;
   textsize  = 1;
   textcolor = textbgcolor = 0xFFFF;
   wrap      = true;
+}
+
+//Swap the active buffer (draw to the screen)
+void GFXSwapBuffer()
+{
+    if (vinfo.yoffset==0)
+        vinfo.yoffset = screensize;
+    else
+        vinfo.yoffset=0;
+    
+    //"Pan" to the back buffer
+    ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
+    
+    //Update the pointer to the back buffer so we don't draw on the front buffer
+    long tmp;
+    tmp=fbp;
+    fbp=bbp;
+    bbp=tmp;
+}
+
+//Convert a pixel to a color
+uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b, struct fb_var_screeninfo *vinfo)
+{
+    return (r<<vinfo->red.offset) | (g<<vinfo->green.offset) | (b<<vinfo->blue.offset);
+}
+
+//Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
+void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
+{
+    long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
+    *((uint16_t*)(bbp + location)) = color;
 }
 
 // Draw a circle outline
@@ -403,12 +483,8 @@ void GFXDrawXBitmap(int16_t x, int16_t y,
   }
 }
 
-#if ARDUINO >= 100
-size_t Adafruit_GFX::write(uint8_t c) {
-#else
-void Adafruit_GFX::write(uint8_t c) {
-#endif
-  if (c == '\n') {
+void GFXWrite(uint8_t c) {
+    if (c == '\n') {
     cursor_y += textsize*8;
     cursor_x  = 0;
   } else if (c == '\r') {
@@ -421,9 +497,6 @@ void Adafruit_GFX::write(uint8_t c) {
       cursor_x = 0;
     }
   }
-#if ARDUINO >= 100
-  return 1;
-#endif
 }
 
 // Draw a character
@@ -461,35 +534,35 @@ void GFXDrawChar(int16_t x, int16_t y, unsigned char c,
   }
 }
 
-void Adafruit_GFX::setCursor(int16_t x, int16_t y) {
+void GFXSetCursor(int16_t x, int16_t y) {
   cursor_x = x;
   cursor_y = y;
 }
 
-void Adafruit_GFX::setTextSize(uint8_t s) {
+void GFXSetTextSize(uint8_t s) {
   textsize = (s > 0) ? s : 1;
 }
 
-void Adafruit_GFX::setTextColor(uint16_t c) {
+void GFXSetTextColor(uint16_t c) {
   // For 'transparent' background, we'll set the bg 
   // to the same as fg instead of using a flag
   textcolor = textbgcolor = c;
 }
 
-void Adafruit_GFX::setTextColor(uint16_t c, uint16_t b) {
+void GFXSetTextColor(uint16_t c, uint16_t b) {
   textcolor   = c;
   textbgcolor = b; 
 }
 
-void Adafruit_GFX::setTextWrap(boolean w) {
+void GFXSetTextWrap(boolean w) {
   wrap = w;
 }
 
-uint8_t Adafruit_GFX::getRotation(void) const {
+uint8_t GFXGetRotation(void) const {
   return rotation;
 }
 
-void Adafruit_GFX::setRotation(uint8_t x) {
+void GFXSetRotation(uint8_t x) {
   rotation = (x & 3);
   switch(rotation) {
    case 0:
@@ -506,15 +579,11 @@ void Adafruit_GFX::setRotation(uint8_t x) {
 }
 
 // Return the size of the display (per current rotation)
-int16_t Adafruit_GFX::width(void) const {
+int16_t GFXWidth(void) const {
   return _width;
 }
  
-int16_t Adafruit_GFX::height(void) const {
+int16_t GFXHeight(void) const {
   return _height;
-}
-
-void Adafruit_GFX::invertDisplay(boolean i) {
-  // Do nothing, must be subclassed if supported
 }
 
