@@ -4,7 +4,10 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
 #include "libevdev.h"
+
 
 struct libevdev *dev = NULL;
 int fd;

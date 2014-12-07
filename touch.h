@@ -3,6 +3,6 @@
 
 //Get touch data
 void touch_init();
-void touch_get_data();
+void touch_get_events();
 
 #endif
