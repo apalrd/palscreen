@@ -43,7 +43,7 @@ int main()
         GFXSwapBuffer();
         
         //Wait for at least a second
-        sleep(1);
+        //sleep(1);
         
         //Fill the screen another color
         GFXFillScreen(0x0000);
@@ -52,37 +52,37 @@ int main()
         GFXSwapBuffer();
         
         //Wait at least a second
-        sleep(1);
+        //sleep(1);
         
         //Blue
         GFXFillScreen(GFXPixelColor(0x00,0x00,0xFF));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
         
         //Red
         GFXFillScreen(GFXPixelColor(0xFF,0x00,0x00));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
         
         //Green
         GFXFillScreen(GFXPixelColor(0x00,0xFF,0x00));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
         
         //Orange
         GFXFillScreen(GFXPixelColor(0xFF,0x80,0x00));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
         
         //Magenta
         GFXFillScreen(GFXPixelColor(0xFF,0x00,0xFF));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
         
         //Yellow
         GFXFillScreen(GFXPixelColor(0xFF,0xFF,0x00));
         GFXSwapBuffer();
-        sleep(1);
+        //sleep(1);
     }
 
 }
