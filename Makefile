@@ -1,6 +1,6 @@
 PROG = palscreen
 SOURCES = $(PROG).c gfx.c
-CFLAGS = -W -Wall -std=C99 $(CFLAGS_EXTRA)
+CFLAGS = -W -Wall -std=c99 $(CFLAGS_EXTRA)
 
 all: $(SOURCES)
 	$(CC) -o $(PROG) $(SOURCES) $(CFLAGS)
