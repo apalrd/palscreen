@@ -149,7 +149,7 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
     //bbp[location] = color;
     //Check that the location is in bounds
-    if(location <= screensize)
+    if(location <= screensize && location >= 0)
     {
         uint16_t *newptr = (bbp + location);
         *newptr = color;

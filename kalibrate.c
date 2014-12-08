@@ -227,7 +227,7 @@ int main()
     
     //now for Y
     slope = (50-190)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
-    //Now find X offset by extending  the slope down to 0
+    //Now find Y offset by extending  the slope down to 0
     offset = (points_stored[1] + points_stored[5])*0.5 - (50/slope);
     
     //Now make them fixed point
