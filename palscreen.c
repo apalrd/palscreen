@@ -12,6 +12,46 @@ PalScreen user interface for PiTFT
 #include "touch.h"
 #include "backlight.h"
 
+//Calling convention for callbacks:
+//For events TD (touch down), LO (lift off), BTN (button):
+//void event_function(char touch_id,void *user_ptr)
+//For event DN (Down):
+//void event_function(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+
+//Callbacks
+void evt0_td(char touch_id,void *user_ptr)
+{
+    printf("TOUCH DOWN PRIMARY id=%d\n",touch_id);
+}
+void evt1_td(char touch_id,void *user_ptr)
+{
+    printf("TOUCH DOWN SECONDARY id=%d\n",touch_id);
+}
+void evt0_lo(char touch_id,void *user_ptr)
+{
+    printf("LIFT OFF PRIMARY id=%d\n",touch_id);
+}
+void evt1_lo(char touch_id,void *user_ptr)
+{
+    printf("LIFT OFF SECONDARY id=%d\n",touch_id);
+}
+void evt0_btn(char touch_id,void *user_ptr)
+{
+    printf("BUTTON PRIMARY id=%d\n",touch_id);
+}
+void evt1_btn(char touch_id,void *user_ptr)
+{
+    printf("BUTTON SECONDARY id=%d\n",touch_id);
+}
+void evt0_dn(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+{
+    printf("DOWN PRIMARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
+}
+void evt1_dn(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+{
+    printf("DOWN SECONDARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
+}
+
 //Main
 int main()
 {
@@ -37,20 +77,18 @@ int main()
     
     //Draw in a color
     GFXFillScreen(0xFFFF);
+    
+    //Setup at leat 2 touch events
+    touch_stack_alloc(0,100,0,100,NULL,evt0_td,evt0_lo,evt0_dn,evt0_btn);
+    touch_stack_alloc(190,290,140,240,NULL,evt1_td,evt1_lo,evt1_dn,evt1_btn);
+    
     while(1)
     {
-        //Process touch events
+        //Process the touch events
         touch_get_events();
-        
-        //If we are touched, draw the pixel
-        if(touch_down())
-        {
-            int xpos = touch_get_x();
-            int ypos = touch_get_y();
-            printf("Printing to the screen at x=%d y=%d\n",xpos,ypos);
-            //Draw a pixel in green at the current location
-            GFXDrawPixel(xpos,ypos,GFXPixelColor(0x00,0xFF,0x00));
-        }
+        touch_stack_proc();
+        //Sleep for a bit (50ms)
+        usleep(50000);
     }
 
 }
