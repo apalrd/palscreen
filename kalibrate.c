@@ -55,8 +55,8 @@ int main()
         if(has_been_pressed)
         {
             //They have started to press it. Read the XY position now
-            points_stored[0] = touch_read_x();
-            points_stored[1] = touch_read_y();
+            points_stored[0] = touch_get_x();
+            points_stored[1] = touch_get_y();
             
             //See if they have released it and we should break
             if(!touch_down())
@@ -93,8 +93,8 @@ int main()
         if(has_been_pressed)
         {
             //They have started to press it. Read the XY position now
-            points_stored[2] = touch_read_x();
-            points_stored[3] = touch_read_y();
+            points_stored[2] = touch_get_x();
+            points_stored[3] = touch_get_y();
             
             //See if they have released it and we should break
             if(!touch_down())
@@ -131,8 +131,8 @@ int main()
         if(has_been_pressed)
         {
             //They have started to press it. Read the XY position now
-            points_stored[4] = touch_read_x();
-            points_stored[5] = touch_read_y();
+            points_stored[4] = touch_get_x();
+            points_stored[5] = touch_get_y();
             
             //See if they have released it and we should break
             if(!touch_down())
@@ -169,8 +169,8 @@ int main()
         if(has_been_pressed)
         {
             //They have started to press it. Read the XY position now
-            points_stored[6] = touch_read_x();
-            points_stored[7] = touch_read_y();
+            points_stored[6] = touch_get_x();
+            points_stored[7] = touch_get_y();
             
             //See if they have released it and we should break
             if(!touch_down())
