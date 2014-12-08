@@ -68,6 +68,11 @@ void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
     if(wdata->cbk != NULL)
     {
         wdata->cbk(wdata->user_int);
+        printf("WIDGET BUTTON: Calling the users callback\n");
+    }
+    else
+    {
+        printf("WIDGET BUTTON: The users callback is null\n");
     }
     
     id = id;

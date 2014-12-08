@@ -30,6 +30,7 @@ void callback(int number)
         {
             fill_level += 10;
         }
+        printf("Incrementing the thermometer! new value is %d\n",fill_level);
     }
     else if(number == 1)
     {
@@ -42,6 +43,7 @@ void callback(int number)
         {
             fill_level -= 10;
         }
+        printf("Decrementing the thermometer! new value is %d\n",fill_level);
     }
     else
     {
@@ -69,6 +71,7 @@ int main()
     printf("Backlight init complete!\n");
 
 
+    fill_level = 127;
     
     //Draw in a color
     GFXFillScreen(0xFFFF);
