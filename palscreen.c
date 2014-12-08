@@ -51,8 +51,8 @@ int main()
         
         //Blue
         GFXFillScreen(GFXPixelColor(0x00,0x00,0xFF));
-        GFXSwapBuf
-        touch_get_events();fer();
+        GFXSwapBuffer();
+        touch_get_events();
         sleep(1);
         
         //Red
