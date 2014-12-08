@@ -58,7 +58,7 @@ void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
     int center_y = wdata->y1 + (h>>1);
     
     //Redraw the text the opposite color too
-    GFXPrintString(center_x,center_y,wdata->color_fg,wdata->color_bg,wdata->text_size,wg_data->text);
+    GFXPrintString(center_x,center_y,wdata->color_fg,wdata->color_bg,wdata->text_size,wdata->text);
                    
     id = id;
 }
