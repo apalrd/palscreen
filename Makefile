@@ -1,5 +1,5 @@
 PROG = palscreen
-SOURCES = $(PROG).c gfx.c backlight.c touch.c touchstk.c
+SOURCES = $(PROG).c gfx.c backlight.c touch.c touchstk.c widgets.c
 KAL = kalibrate
 KALSRC = $(KAL).c gfx.c backlight.c touch.c
 CFLAGS = -W -Wall -std=c99 $(CFLAGS_EXTRA)
