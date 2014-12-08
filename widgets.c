@@ -145,7 +145,7 @@ void widget_draw_txtbox(int x1, int x2, int y1, int y2, uint16_t color_fg, uint1
 void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_fg, uint16_t color_bg)
 {
     //Calculate partial fill level
-    int partial_fill = (fill_level)/(y2-y1);
+    int partial_fill = ((fill_level)*(y2-y1))>>8;
     
     //Draw the two background rectangles
     GFXFillRect(x1, y1, (x2-x1), ((y2-y1)-partial_fill), color_bg);
@@ -157,7 +157,7 @@ void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level, ui
 void widget_draw_thermo_h(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_fg, uint16_t color_bg)
 {
     //Calculate partial fill level
-    int partial_fill = (fill_level)/(x2-x1);
+    int partial_fill = ((fill_level)*(x2-x1))>>8;
     
     //Draw the two background rectangles
     GFXFillRect(x1, y1, ((x2-x1)-partial_fill),(y2-y1), color_bg);
