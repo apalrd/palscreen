@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
+#include "touch.h"
 
 
 //File globals
@@ -35,12 +36,12 @@ void touch_get_events()
     while(1)
     {
         //Infinite loops are cooler
-        len = read(dev->fd, &ev_temp, sizeof(struct ev_temp));
+        len = read(dev->fd, &ev_temp, sizeof(struct input_event));
         if (len < 0)
         {
             return;//End of queue
         }
-        else if (len > 0 && len % sizeof(struct ev_temp) != 0)
+        else if (len > 0 && len % sizeof(struct input_event) != 0)
         {
             printf("TOUCH: Bad read from touch dev\n");
             return;//Bad stuffs
@@ -48,7 +49,7 @@ void touch_get_events()
         else if (len > 0)
         {
             //Number of events
-            int nev = len/sizeof(struct ev_temp);
+            int nev = len/sizeof(struct input_event);
             //Do stuff with this???
             
             //struct input_event {
@@ -57,7 +58,7 @@ void touch_get_events()
             //      __u16 code;
             //      __s32 value;
             //      };
-            printf("TOUCH: Got an event type=%d code=%d value=%d\n"ev_temp.type,ev_temp.code,ev_temp.value);
+            printf("TOUCH: Got an event type=%d code=%d value=%d\n",ev_temp.type,ev_temp.code,ev_temp.value);
         }
         
     }
