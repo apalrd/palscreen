@@ -631,7 +631,7 @@ void GFXPrintString(int16_t xin, int16_t yin, uint16_t fgcolor, uint16_t bgcolor
     cursor_y = yin - (textsize * 4);
     
     //Write the characters
-    for(int i = 0;i<num_chars;i++)
+    for(int i = 0;i<=num_chars;i++)
     {
         //Write this character
         GFXWrite(text[i]);
