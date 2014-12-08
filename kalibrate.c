@@ -76,7 +76,7 @@ int main()
         }
         
     }
-    printf("Got cal for point x=50 y=50, touched at x=%d y=%d\n",points_stored[0],points_Stored[1]);
+    printf("Got cal for point x=50 y=50, touched at x=%d y=%d\n",points_stored[0],points_stored[1]);
     
     //Second point
     printf("Second point\n");
@@ -114,7 +114,7 @@ int main()
         }
         
     }
-    printf("Got cal for point x=270 y=50, touched at x=%d y=%d\n",points_stored[2],points_Stored[3]);
+    printf("Got cal for point x=270 y=50, touched at x=%d y=%d\n",points_stored[2],points_stored[3]);
     
     //Second point
     printf("Third point\n");
@@ -152,7 +152,7 @@ int main()
         }
         
     }
-    printf("Got cal for point x=50 y=190, touched at x=%d y=%d\n",points_stored[4],points_Stored[5]);
+    printf("Got cal for point x=50 y=190, touched at x=%d y=%d\n",points_stored[4],points_stored[5]);
     
     //Second point
     printf("Fourth point\n");
@@ -190,7 +190,7 @@ int main()
         }
         
     }
-    printf("Got cal for point x=270 y=190, touched at x=%d y=%d\n",points_stored[6],points_Stored[7]);
+    printf("Got cal for point x=270 y=190, touched at x=%d y=%d\n",points_stored[6],points_stored[7]);
     
     //Open a file for writing
     int fd = open("screen.kal",O_CREAT | O_WRONLY,S_IRUSR);
