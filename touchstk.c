@@ -43,14 +43,14 @@ void touch_stack_proc()
             //See if the lo event is mapped (not null)
             if(touch_stack_glob[touched_last_id].evt_lo != NULL)
             {
-                touch_stack_glob[touched_last_id].evt_lo(touched_last_id,xpos,ypos,touch_get_prs());
+                touch_stack_glob[touched_last_id].evt_lo(touched_last_id,touch_stack_glob[new_id].user_ptr);
             }
             
             //If the new button is -1 (touch released), also process the button event
             //But only if the event is mapped
             if(new_id == -1 && touch_stack_glob[touched_last_id].evt_btn != NULL)
             {
-                touch_stack_glob[touched_last_id].evt_btn(touched_last_id,xpos,ypos,touch_get_prs());
+                touch_stack_glob[touched_last_id].evt_btn(touched_last_id,touch_stack_glob[new_id].user_ptr);
             }
         }
         
@@ -59,7 +59,7 @@ void touch_stack_proc()
         if(new_id >= 0 && touch_stack_glob[new_id].evt_td != NULL)
         {
             //Process the touch down event for that button
-            touch_stack_glob[new_id].evt_td(new_id,xpos,ypos,touch_get_prs());
+            touch_stack_glob[new_id].evt_td(new_id,touch_stack_glob[new_id].user_ptr,xpos,ypos,touch_get_prs());
         }
     }
     
@@ -67,7 +67,7 @@ void touch_stack_proc()
     //But only if the event is mapped
     if(new_id >= 0 && touch_stack_glob[new_id].evt_dn != NULL)
     {
-        touch_stack_glob[new_id].evt_dn(new_id,xpos,ypos,touch_get_prs());
+        touch_stack_glob[new_id].evt_dn(new_id,touch_stack_glob[new_id].user_ptr);
     }
     
     //Store the last id
@@ -103,7 +103,7 @@ void touch_stack_free(char id)
 }
 
 //Allocate an element on the touch stack
-char touch_stack_alloc(int x1, int x2, int y1, int y2, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn)
+char touch_stack_alloc(int x1, int x2, int y1, int y2, void *usr_ptr, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn)
 {
     int free_id = -1;
     //Find the next free element on the stack
@@ -136,6 +136,8 @@ char touch_stack_alloc(int x1, int x2, int y1, int y2, void *evt_td, void *evt_l
     touch_stack_glob[free_id].evt_lo = evt_lo;
     touch_stack_glob[free_id].evt_dn = evt_dn;
     touch_stack_glob[free_id].evt_btn = evt_btn;
+    //User Int
+    touch_stack_glob[free_id].user_ptr = usr_ptr;
     //Is Allocated
     touch_stack_glob[free_id].is_alloc = 1;
     
@@ -155,4 +157,30 @@ char touch_stack_find(int x, int y)
     }
     //Return -1 if none found
     return -1;
+}
+
+//Get x1, x2, y1, y2 for a given element id
+char touch_stack_get_pos(char id, int *x1, int *x2, int *y1, int *y2)
+{
+    //Is it valid?
+    if(id >= 32 !! id < =)
+    {
+        //Invalid
+        printf("TOUCHSTK: Tried to lookup position for bad id %d\n",id);
+        //Return -1
+        return -1;
+    }
+    //Is it allocated?
+    if(!touch_stack_glob[id].is_alloc)
+    {
+        //Not allocated
+        printf("TOUCHSTK: Tried to lookup position for unallocated id %d\n",id);
+        return -1;
+    }
+    
+    //It is valid. Return the stuff.
+    x1 = touch_stack_glob[id].x1;
+    x2 = touch_stack_glob[id].x2;
+    y1 = touch_stack_glob[id].y1;
+    y2 = touch_stack_glob[id].y2;
 }
