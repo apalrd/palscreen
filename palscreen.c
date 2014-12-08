@@ -9,7 +9,7 @@ PalScreen user interface for PiTFT
 #include <stdio.h>
 #include "palscreen.h"
 #include "gfx.h"
-//#include "touch.h"
+#include "touch.h"
 #include "backlight.h"
 
 //Main
@@ -20,16 +20,16 @@ int main()
     GFXInit();
     printf("GFX init complete!\n");
     
-    //printf("Init touch\n");
-    //touch_init();
-    //printf("Touch init complete!\n");
+    printf("Init touch\n");
+    touch_init();
+    printf("Touch init complete!\n");
     
-    printf("GPIO init\n");
-    gpio_init();
-    printf("GPIO init complete!\n");
+    printf("Backlight init\n");
+    backlight_init();
+    printf("Backlight init complete!\n");
     
     //Turn on the backlight
-    gpio_backlight_on();
+    backlight_on();
 
 
     
@@ -47,31 +47,37 @@ int main()
         
         //Wait for at least a second
         sleep(1);
+        touch_get_events();
         
         //Blue
         GFXFillScreen(GFXPixelColor(0x00,0x00,0xFF));
-        GFXSwapBuffer();
+        GFXSwapBuf
+        touch_get_events();fer();
         sleep(1);
         
         //Red
         GFXFillScreen(GFXPixelColor(0xFF,0x00,0x00));
         GFXSwapBuffer();
         sleep(1);
+        touch_get_events();
         
         //Green
         GFXFillScreen(GFXPixelColor(0x00,0xFF,0x00));
         GFXSwapBuffer();
         sleep(1);
+        touch_get_events();
         
         //Orange
         GFXFillScreen(GFXPixelColor(0xFF,0x80,0x00));
         GFXSwapBuffer();
         sleep(1);
+        touch_get_events();
         
         //Magenta
         GFXFillScreen(GFXPixelColor(0xFF,0x00,0xFF));
         GFXSwapBuffer();
         sleep(1);
+        touch_get_events();
         
         //Yellow
         GFXFillScreen(GFXPixelColor(0xFF,0xFF,0x00));
@@ -79,7 +85,7 @@ int main()
         sleep(1);
         
         //Get touch events after all of that
-        //touch_get_events();
+        touch_get_events();
     }
 
 }
