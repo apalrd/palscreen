@@ -31,9 +31,15 @@ void widget_int_btn_td(int id,struct widget_data_btn *wdata)
     //Draw the outline box too
     GFXDrawRect(wdata->x1,wdata->y1,w,h,wdata->color_bg);
     
+    //Calculate center
+    int center_x = wdata->x1 + (w>>1);
+    int center_y = wdata->y1 + (h>>1);
+
+    
     //Redraw the text the opposite color too
-   
-    //Skip that for now
+    GFXPrintString(center_x,center_y,wdata->color_bg,wdata->color_fg,wdata->text_size,wg_data->text);
+    
+    //Make the compiler stop complaining
     id = id;
 }
 void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
@@ -47,7 +53,8 @@ void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
     GFXDrawRect(wdata->x1,wdata->y1,w,h,wdata->color_fg);
     
     //Redraw the text the opposite color too
-    //Skip that for now
+    GFXPrintString(center_x,center_y,wdata->color_fg,wdata->color_bg,wdata->text_size,wg_data->text);
+                   
     id = id;
 }
 void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
@@ -95,6 +102,7 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     wdata->cbk = cbk;
     wdata->user_int = usr_int;
     wdata->text = text;
+    wdata->text_size = text_size;
     
     //Create the touch callback
     touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn, widget_int_btn_free);

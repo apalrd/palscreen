@@ -9,6 +9,7 @@ struct widget_data_btn {
     int x2;
     int y1;
     int y2;
+    int text_size;
     char *text;
     void *cbk;
     int user_int;
