@@ -43,7 +43,7 @@ int main()
     
     printf("Starting the button init\n");
 
-    widget_draw_btn(220,340,180,295,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,NULL);
+    widget_draw_btn(180,295,220,340,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,NULL);
     widget_draw_btn(5,105,5,105,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),NULL,1,NULL);
     
     printf("Finished the button init\n");
