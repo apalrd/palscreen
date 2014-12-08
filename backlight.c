@@ -69,6 +69,7 @@ void backlight_check()
     //Is the backlight on?
     if(backlight_stat)
     {
+        printf("BACKLIGHT: Checking, light is ON\n");
         //Check the delta t
         time_t cur_time;
         time(&cur_time);
@@ -86,6 +87,7 @@ void backlight_check()
     //Otherwise the backlight is off
     else
     {
+        printf("BACKLIGHT: Checking, light is OFF\n");
         //Do nothing, poking the backlight will turn it back on
     }
 }
