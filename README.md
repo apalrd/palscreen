@@ -22,3 +22,19 @@ GUI elements available:
 The GUI is optimized for 320x240 (portrait) display such as the Adafruit PiTFT panel module
 
 
+GFX module
+==========
+
+The GFX module is a heavily modified version of the Adafruit-GFX library. It has been modified for C operation (all of the class members have been prefixed with GFX now), and implements the library fully. The library opens a Linux framebuffer interface for a specified resolution (currently hardcoded), and the pixel write function writes directly to the framebuffer RAM. A function is provided to convert 3x bytes into a u16 color. The fast vline and hline functions have been implemented more efficiently. This pair of files (gfx.h and gfx.c) can be used in other projects easily.
+
+
+Backlight module
+================
+
+The Backlight module is designed to control the backlight of the PiTFT (Resistive version). It currently uses the system calls method, which requires sudo permissions, and is very slow. A better interface would be good. It also provides a timer to automatically turn off the backlight, and a poke function to wake it up/keep it awake.
+
+Touch module
+============
+
+The Touch module is designed to interface with the /dev/input/touchscreen interface directly. Currently it is unfinished.
+
