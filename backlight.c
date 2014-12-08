@@ -59,6 +59,7 @@ void backlight_poke()
         //Turn it on immediately
         backlight_on();
     }
+    printf("BACKLIGHT: Was Poked\n");
 }
 
 void backlight_check()
@@ -69,13 +70,12 @@ void backlight_check()
     //Is the backlight on?
     if(backlight_stat)
     {
-        printf("BACKLIGHT: Checking, light is ON\n");
         //Check the delta t
         time_t cur_time;
         time(&cur_time);
         
         //Get diff time
-        int delta_t = difftime(backlight_last_time,cur_time);
+        int delta_t = difftime(cur_time,backlight_last_time);
         
         //Is diff time old enough to turn it off?
         if(delta_t >= backlight_expire)
@@ -83,6 +83,7 @@ void backlight_check()
             //Turn the backlight off
             backlight_off();
         }
+        printf("BACKLIGHT: Checking, light is ON, delta T is %d\n", delta_t);
     }
     //Otherwise the backlight is off
     else
