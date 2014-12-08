@@ -51,6 +51,8 @@ int main()
         //Process the touch events
         touch_get_events();
         touch_stack_proc();
+        //Check the backlight
+        backlight_check();
         //Sleep for a bit (50ms)
         usleep(50000);
     }

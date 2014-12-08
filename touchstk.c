@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include "touchstk.h"
 #include "touch.h"
+#include "backlight.h"
 
 //Touch stack (32 elements)
 struct touch_stack_elem touch_stack_glob[32];
@@ -31,6 +32,8 @@ void touch_stack_proc()
     {
         //Get the first number that matches the current position
         new_id = touch_stack_find(xpos,ypos);
+        //Poke the backlight
+        backlight_poke();
     }
     
     //If our new id is different from our old id
@@ -82,7 +85,7 @@ void touch_stack_reset()
     {
         
         //Check to see if a free pointer exists
-        if(touch_stack_glob[i].evt_Free != NULL)
+        if(touch_stack_glob[i].evt_free != NULL)
         {
             //Call it
             touch_stack_glob[i].evt_free(i,touch_stack_glob[i].user_ptr);

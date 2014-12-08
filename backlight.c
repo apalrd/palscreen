@@ -30,19 +30,21 @@ void backlight_init()
     backlight_poke();
     
     //Set the expire time to 30sec
-    backlight_expire = 30;
+    backlight_expire = 10;
 }
 //Turn the backlight on
 void backlight_on()
 {
     system("echo '1' > /sys/class/gpio/gpio252/value");
     backlight_stat = 1;
+    printf("BACKLIGHT: Turning ON\n");
 }
 //Turn the backlight off
 void backlight_off()
 {
     system("echo '0' > /sys/class/gpio/gpio252/value");
     backlight_stat = 0;
+    printf("BACKLIGHT: Turning FF\n");
 }
 
 //Poke the backlight so it stays on
