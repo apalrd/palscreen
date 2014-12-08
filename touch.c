@@ -11,7 +11,6 @@
 
 
 //File globals
-struct input_event *ev_temp;
 int ev_fd;
 
 
@@ -31,12 +30,13 @@ void touch_init()
 void touch_get_events()
 {
     int len = 0;
+    struct input_event ev_temp;
     
     //Get all of the recent touch events from the kernel
     while(1)
     {
         //Infinite loops are cooler
-        len = read(dev->fd, &ev_temp, sizeof(struct input_event));
+        len = read(ev_fd, &ev_temp, sizeof(struct input_event));
         if (len < 0)
         {
             return;//End of queue
