@@ -98,5 +98,5 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     wdata->text = text;
     
     //Create the touch callback
-    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn, widget_int_btn_Free);
+    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn, widget_int_btn_free);
 }
