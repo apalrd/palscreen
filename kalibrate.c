@@ -201,7 +201,7 @@ int main()
     //Print the kal line
     for(int i = 0;i < 4;i++)
     {
-        fprintf(fd,"X=%d Y=%d x=%d y=%d\n",point_x[i],point_y[i],points_stored[i*2]points_stored[i*2+1]);
+        fprintf(fd,"X=%d Y=%d x=%d y=%d\n",point_x[i],point_y[i],points_stored[i*2],points_stored[i*2+1]);
         printf("X=%d Y=%d x=%d y=%d\n",point_x[i],point_y[i],points_stored[i*2]points_stored[i*2+1]);
     }
     
