@@ -4,28 +4,16 @@ palscreen
 Touchscreen software for Raspberry Pi + PiTFT
 
 
-lcars gui
-=========
+squares gui
+===========
 
-GUI is layed out like an LCARS-style menu. The layered menus are arranged in a tree view. Each menu category is assigned a color. At the top of the screen, a banner displays colored banners noting the name of each level of the higher-level tree. Within each window, there are GUI elements which can be configured. The configuration of each window is done through a JSON file for each page. The screen system is heavily tied to the automation system protocol (MQTT). The page header is automatically generated (and animations to change page are generated as well). The page body is normally laid out into cells. The page designer can specify the number of rows and columns (up to 3 of each), and the size of the elements in each cell is automatically known for these configurations. Some elements can overlap and take multiple cells. L-shaped elements are not allowed. Rounding/etc. for LCARS theme are automtically generated.
-
-GUI elements available:
-* Button-Page forces a page transition to the page named
-* Button-Event raises an event when pressed (by setting the MQTT topic to a random number)
-* Button-NumberUp increases a variable by a fixed number each time it is pressed/released
-* TextBox-Static draws a static string of text centered at a given point
-* TextBox-Dynamic draws a text box using text from a MQTT topic. Text color values can be mapped from numerical values.
-* BarGraph draws a bar graph from a number in an MQTT topic. Background color can be mapped from numerical values.
-* ColorCell draws a fixed color cell based on a number in an MQTT topic. Discrete values or ranges are mapped to certain colors. Cell can be a square-box, round-box, or circle. Combined with a BarGraph, can be used to make a thermometer shape. 
-
-
-The GUI is optimized for 320x240 (portrait) display such as the Adafruit PiTFT panel module
+GUI design has not yet been implemented. Currently that is left up to the programmer.
 
 
 GFX module
 ==========
 
-The GFX module is a heavily modified version of the Adafruit-GFX library. It has been modified for C operation (all of the class members have been prefixed with GFX now), and implements the library fully. The library opens a Linux framebuffer interface for a specified resolution (currently hardcoded), and the pixel write function writes directly to the framebuffer RAM. A function is provided to convert 3x bytes into a u16 color. The fast vline and hline functions have been implemented more efficiently. This pair of files (gfx.h and gfx.c) can be used in other projects easily.
+The GFX module is a heavily modified version of the Adafruit-GFX library. It has been modified for C operation (all of the class members have been prefixed with GFX), and implements the library fully. The library opens a Linux framebuffer interface for a specified resolution (currently hardcoded), and the pixel write function writes directly to the framebuffer RAM. A function is provided to convert 3x bytes into a u16 color. The fast vline and hline functions have been implemented more efficiently. This pair of files (gfx.h and gfx.c) can be used in other projects easily.
 
 
 Backlight module
@@ -36,5 +24,8 @@ The Backlight module is designed to control the backlight of the PiTFT (Resistiv
 Touch module
 ============
 
-The Touch module is designed to interface with the /dev/input/touchscreen interface directly. Currently it is unfinished.
+The Touch module is designed to interface with the /dev/input/touchscreen interface directly. It provides two initialization functions (touch_init and touch_read_kal) which initialize the linux evdev driver and then read the calibration file respectively. A program called kalibrate is provided which uses the touch, gfx, and backlight modules to draw 4 crosshairs on the screen and calibrate from them, and the touch module can read in the calibration. For most applications, both functions should be called to provide display-adjusted data, otherwise the data returned is raw. Note that the Adafruit screen x/y are swapped (or appear to be), so the data returned from the x channel actually came from the y event message, and vice versa, and they are stored in the linux-native name for the cur_x/cur_y variables. 
 
+Pressure data is also provided, and is always raw. 
+
+The user must call touch_get_events() regularly to read the touch events from the linux buffers. The user can then call touch_get_x, touch_get_y, and touch_get_prs to read the latest x, y, pressure data from the touch screen. The user should read touch_down() before, as an indication of touch data present. Error checking on the x/y/prs outputs when touch_down() is false is not provided.
