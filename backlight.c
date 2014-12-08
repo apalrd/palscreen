@@ -44,7 +44,7 @@ void backlight_off()
 {
     system("echo '0' > /sys/class/gpio/gpio252/value");
     backlight_stat = 0;
-    printf("BACKLIGHT: Turning FF\n");
+    printf("BACKLIGHT: Turning OFF\n");
 }
 
 //Poke the backlight so it stays on

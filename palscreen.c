@@ -32,9 +32,6 @@ int main()
     printf("Backlight init\n");
     backlight_init();
     printf("Backlight init complete!\n");
-    
-    //Turn on the backlight
-    backlight_on();
 
 
     
@@ -43,9 +40,13 @@ int main()
     
     //Setup 2 buttons with callbacks
     //void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text);
+    
+    printf("Starting the button init\n");
 
     widget_draw_btn(220,340,180,295,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,NULL);
     widget_draw_btn(5,105,5,105,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),NULL,1,NULL);
+    
+    printf("Finished the button init\n");
     
     while(1)
     {
