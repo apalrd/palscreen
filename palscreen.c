@@ -46,7 +46,7 @@ int main()
         if(touch_down())
         {
             int xpos = touch_get_x();
-            int ypox = touch_Get_y();
+            int ypos = touch_Get_y();
             printf("Printing to the screen at x=%d y=%d\n",xpos,ypos);
             //Draw a pixel in green at the current location
             GFXDrawPixel(xpos,ypos,GFXPixelColor(0x00,0xFF,0x00));
