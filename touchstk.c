@@ -80,12 +80,20 @@ void touch_stack_reset()
     //Go through the whole touch stack and un-allocate it all
     for(int i = 0;i<32;i++)
     {
+        
+        //Check to see if a free pointer exists
+        if(touch_stack_glob[i].evt_Free != NULL)
+        {
+            //Call it
+            touch_stack_glob[i].evt_free(i,touch_stack_glob[i].user_ptr);
+        }
+        
         //Unallocate this element of the glob stack
         touch_stack_glob[i].is_alloc=0;
     }
     
     //Reset touched last
-    touched_last_id = 0;
+    touched_last_id = -1;
 }
 
 //Delete a specific element off the stack
@@ -103,7 +111,7 @@ void touch_stack_free(int id)
 }
 
 //Allocate an element on the touch stack
-int touch_stack_alloc(int x1, int x2, int y1, int y2, void* usr_ptr, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn)
+int touch_stack_alloc(int x1, int x2, int y1, int y2, void* usr_ptr, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn, void* evt_free)
 {
     int free_id = -1;
     //Find the next free element on the stack
@@ -136,6 +144,7 @@ int touch_stack_alloc(int x1, int x2, int y1, int y2, void* usr_ptr, void* evt_t
     touch_stack_glob[free_id].evt_lo = evt_lo;
     touch_stack_glob[free_id].evt_dn = evt_dn;
     touch_stack_glob[free_id].evt_btn = evt_btn;
+    touch_stack_glob[free_id].evt_free = evt_free;
     //User Int
     touch_stack_glob[free_id].user_ptr = usr_ptr;
     //Is Allocated

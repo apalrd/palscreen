@@ -13,53 +13,6 @@ PalScreen user interface for PiTFT
 #include "backlight.h"
 #include "touchstk.h"
 
-//Calling convention for callbacks:
-//For events TD (touch down), LO (lift off), BTN (button):
-//void event_function(int touch_id,void *user_ptr)
-//For event DN (Down):
-//void event_function(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
-
-//Callbacks
-void evt0_td(int touch_id,void *user_ptr)
-{
-    printf("TOUCH DOWN PRIMARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt1_td(int touch_id,void *user_ptr)
-{
-    printf("TOUCH DOWN SECONDARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt0_lo(int touch_id,void *user_ptr)
-{
-    printf("LIFT OFF PRIMARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt1_lo(int touch_id,void *user_ptr)
-{
-    printf("LIFT OFF SECONDARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt0_btn(int touch_id,void *user_ptr)
-{
-    printf("BUTTON PRIMARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt1_btn(int touch_id,void *user_ptr)
-{
-    printf("BUTTON SECONDARY id=%d\n",touch_id);
-    user_ptr = user_ptr;
-}
-void evt0_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
-{
-    printf("DOWN PRIMARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
-    user_ptr = user_ptr;
-}
-void evt1_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
-{
-    printf("DOWN SECONDARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
-    user_ptr = user_ptr;
-}
 
 //Main
 int main()
@@ -87,9 +40,11 @@ int main()
     //Draw in a color
     GFXFillScreen(0xFFFF);
     
-    //Setup at leat 2 touch events
-    touch_stack_alloc(0,100,0,100,NULL,evt0_td,evt0_lo,evt0_dn,evt0_btn);
-    touch_stack_alloc(190,290,140,240,NULL,evt1_td,evt1_lo,evt1_dn,evt1_btn);
+    //Setup 2 buttons with callbacks
+    //void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text);
+
+    widget_draw_button(220,340,180,295,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,NULL)
+    widget_draw_button(5,105,5,105,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),NULL,1,NULL)
     
     while(1)
     {

@@ -20,6 +20,43 @@ void widget_clear_screen(uint16_t color)
 }
 
 //Internal button functions
+void widget_int_btn_td(int id,void* wdata)
+{
+    //touch down function - Draw the boxes in inverted colors
+    int w = wdata->x2 - wdata->x1;
+    int h = wdata->y2 - wdata->y1;
+    GFXFillRect(wdata->x1,wdata->y1,w,h,wdata->color_fg);
+    
+    //Draw the outline box too
+    GFXDrawRect(wdata->x1,wdata->y1,w,h,wdata->color_bg);
+    
+    //Redraw the text the opposite color too
+   
+    //Skip that for now
+}
+void widget_int_btn_lo(int id,void* wdata)
+{
+    //lift off function - Draw the boxes in correct colors
+    int w = wdata->x2 - wdata->x1;
+    int h = wdata->y2 - wdata->y1;
+    GFXFillRect(wdata->x1,wdata->y1,w,h,wdata->color_bg);
+    
+    //Draw the outline box too
+    GFXDrawRect(wdata->x1,wdata->y1,w,h,wdata->color_fg);
+    
+    //Redraw the text the opposite color too
+    //Skip that for now
+}
+void widget_int_btn_btn(int id,void* wdata)
+{
+    //Button function, call the user's callback
+    printf("WIDGET BUTTON: callback received, user int %d\n",wdata->user_int);
+}
+void widget_int_btn_free(int id,void* wdata)
+{
+    //Free callback - free the data struct we allocated
+    free(wdata);
+}
 
 
 //Draw a button with overlay text and a pressed callback
@@ -39,7 +76,7 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     int center_y = y1 + (y2-y1)>>1;
     
     //Draw text
-    GFXPrintString(center_x,center_y,color_fg,color_bg,text);
+    //GFXPrintString(center_x,center_y,color_fg,color_bg,text);
     
     //Malloc a new data structire
     struct widget_data_btn *wdata = malloc(sizeof(widget_data_btn));
@@ -56,5 +93,5 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     wdata->text = text;
     
     //Create the touch callback
-    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, cbk);
+    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn);
 }
