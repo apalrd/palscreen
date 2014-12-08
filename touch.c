@@ -42,13 +42,13 @@ unsigned char touch_down()
 
 int touch_get_x()
 {
-    //Return scaled x
-    return cur_x;
+    //Return scaled x - note that touchscreen is inverted
+    return cur_y;
 }
 int touch_get_y()
 {
-    //Return scaled y
-    return cur_y;
+    //Return scaled y - note that touchscreen is inverted
+    return cur_x;
 }
 int touch_get_prs()
 {
