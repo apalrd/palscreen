@@ -85,7 +85,7 @@ void touch_stack_reset()
     }
     
     //Reset touched last
-    touched_last = 0;
+    touched_last_id = 0;
 }
 
 //Delete a specific element off the stack

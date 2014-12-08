@@ -574,12 +574,12 @@ void GFXPrintString(int16_t xin, int16_t yin, uint16_t fgcolor, uint16_t bgcolor
     //Calculate length of string
     int total_width = 0;
     //Total number of characters
-    unsigned int num_chars = 0;
+    int num_chars = 0;
     //Don't allow more than 64 characters
     for(int i = 0;i<64;i++)
     {
         //Is this character null?
-        if(text[i] != NULL)
+        if(text[i] != 0)
         {
             //Not null, add width
             total_width += textsize*6;
