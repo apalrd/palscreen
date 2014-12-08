@@ -6,59 +6,81 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
-#include <wiringpi.h>
+#include "backlight.h"
 
-//Setup the GPIO system
-void gpio_init()
+//Backlight time since backlight-on event
+time_t backlight_last_time;
+uint8_t backlight_stat;
+uint8_t backlight_expire;
+
+//Setup the backlight
+void backlight_init()
 {
     //system call to config the gpio
     system("echo 252 > /sys/class/gpio/export");
     system("echo 'out' > /sys/class/gpio/gpio252/direction");
     
-    //Turn off the backlight
-    gpio_backlight_off();
+    //Backlight is already off
+    backlight_stat = 0;
     
-    //Start wiring pi module
-    WiringPiSetup();
+    //Turn on the backlight and poke it
+    backlight_poke();
     
-    //Set the four button pins to INPUT
-    pinMode(4,INPUT);
-    pinMode(3,INPUT);
-    pinMode(2,INPUT);
-    pinMode(1,INPUT);
-    
-    //Set the pull ups
-    pinUpDnControl(4,PUD_UP);
-    pinUpDnControl(3,PUD_UP);
-    pinUpDnControl(2,PUD_UP);
-    pinUpDnControl(1,PUD_UP);
+    //Set the expire time to 30sec
+    backlight_expire = 30;
 }
 //Turn the backlight on
-void gpio_backlight_on()
+void backlight_on()
 {
     system("echo '1' > /sys/class/gpio/gpio252/value");
+    backlight_stat = 1;
 }
 //Turn the backlight off
-void gpio_backlight_off()
+void backlight_off()
 {
     system("echo '0' > /sys/class/gpio/gpio252/value");
+    backlight_stat = 0;
 }
 
-
-//Read the status of a GPIO button
-void gpio_read_switch(char pin)
+//Poke the backlight so it stays on
+void backlight_poke()
 {
-    if(pin < 5 && pin > 0)
+    //Poke the backlight so we keep it on if necessary
+    time(&backlight_last_time);
+    
+    //IS the backlight on? Otherwise turn it on
+    if(!backlight)
     {
-        //Pin is valid, read it's inverse value
-        return !digitalRead(pin);
+        //Turn it on immediately
+        backlight_on();
     }
-    //Pin is not valid, return 0
-    return 0;
 }
 
-//Close the GPIO system
-void gpio_close()
+void backlight_check()
 {
-    //Do nothing yet
+    //Check to see if the backlight has been poked recently
+    //or if we should turn it on/off
+    
+    //Is the backlight on?
+    if(backlight)
+    {
+        //Check the delta t
+        time_t cur_time;
+        time(&cur_time);
+        
+        //Get diff time
+        int delta_t = difftime(&backlight_last_time,&cur_time);
+        
+        //Is diff time old enough to turn it off?
+        if(delta_t >= backlight_expire)
+        {
+            //Turn the backlight off
+            backlight_off();
+        }
+    }
+    //Otherwise the backlight is off
+    else
+    {
+        //Do nothing, poking the backlight will turn it back on
+    }
 }

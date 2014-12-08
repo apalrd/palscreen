@@ -1,13 +1,13 @@
-//GPIO interface code
+//Backlight code
 //Copyright 2014 Andrew Palardy
 
-//Setup the GPIO system
-void gpio_init();
+//Setup the backlight
+void backlight_init();
 //Turn the backlight on
-void gpio_backlight_on();
+void backlight_on();
 //Turn the backlight off
-void gpio_backlight_off();
-//Read the status of a GPIO button
-void gpio_read_switch(char pin);
-//Close the GPIO system
-void gpio_close();
+void backlight_off();
+//Poke the backlight
+void backlight_poke();
+//Check the backlight and turn off if necessary
+void backlight_check();
