@@ -59,7 +59,7 @@ void touch_stack_proc()
         if(new_id >= 0 && touch_stack_glob[new_id].evt_td != NULL)
         {
             //Process the touch down event for that button
-            touch_stack_glob[new_id].evt_td(new_id,touch_stack_glob[new_id].user_ptr,xpos,ypos,touch_get_prs());
+            touch_stack_glob[new_id].evt_td(new_id,touch_stack_glob[new_id].user_ptr);
         }
     }
     
@@ -67,7 +67,7 @@ void touch_stack_proc()
     //But only if the event is mapped
     if(new_id >= 0 && touch_stack_glob[new_id].evt_dn != NULL)
     {
-        touch_stack_glob[new_id].evt_dn(new_id,touch_stack_glob[new_id].user_ptr);
+        touch_stack_glob[new_id].evt_dn(new_id,touch_stack_glob[new_id].user_ptr,xpos,ypos,touch_get_prs());
     }
     
     //Store the last id

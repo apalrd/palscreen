@@ -16,9 +16,9 @@ struct touch_stack_elem {
     int y1;
     int y2;
     //Callback pointers
-    void (*evt_td)(int, void*,int,int,int);
+    void (*evt_td)(int, void*);
     void (*evt_lo)(int, void*);
-    void (*evt_dn)(int, void*);
+    void (*evt_dn)(int, void*,int,int,int);
     void (*evt_btn)(int, void*);
     //User's pointer
     void *user_ptr;
