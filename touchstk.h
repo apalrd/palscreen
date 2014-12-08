@@ -16,12 +16,12 @@ struct touch_stack_elem {
     int y1;
     int y2;
     //Callback pointers
-    void* evt_td;
-    void* evt_lo;
-    void* evt_dn;
-    void* evt_btn;
+    void (*evt_td)(int, void*);
+    void (*evt_lo)(int, void*);
+    void (*evt_dn)(int, void*);
+    void (*evt_btn)(int, void*);
     //User's pointer
-    void* user_ptr;
+    void *user_ptr;
     //Is Allocated
     uint8_t is_alloc;
     
