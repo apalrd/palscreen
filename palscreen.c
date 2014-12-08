@@ -48,11 +48,17 @@ int main()
     
     printf("Finished the button init\n");
     
+    touch_get_events();
+    //Wait a tad
+    usleep(50000);
+    touch_get_events();
+    
     while(1)
     {
         printf("Iterating the loop\n");
         //Process the touch events
         touch_get_events();
+        printf("Processing the touch event stack\n");
         touch_stack_proc();
         //Check the backlight
         backlight_check();

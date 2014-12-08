@@ -23,6 +23,7 @@ void widget_clear_screen(uint16_t color)
 //Internal button functions
 void widget_int_btn_td(int id,struct widget_data_btn *wdata)
 {
+    printf("WIDGET BUTTON: callback received, touch down, user in t %d\n",wdata->user_int);
     //touch down function - Draw the boxes in inverted colors
     int w = wdata->x2 - wdata->x1;
     int h = wdata->y2 - wdata->y1;
@@ -38,6 +39,7 @@ void widget_int_btn_td(int id,struct widget_data_btn *wdata)
 }
 void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
 {
+    printf("WIDGET BUTTON: callback received, lift off, user in t %d\n",wdata->user_int);
     //lift off function - Draw the boxes in correct colors
     int w = wdata->x2 - wdata->x1;
     int h = wdata->y2 - wdata->y1;
@@ -53,11 +55,12 @@ void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
 void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
 {
     //Button function, call the user's callback
-    printf("WIDGET BUTTON: callback received, user int %d\n",wdata->user_int);
+    printf("WIDGET BUTTON: callback received, button, user int %d\n",wdata->user_int);
     id = id;
 }
 void widget_int_btn_free(int id,struct widget_data_btn *wdata)
 {
+    printf("WIDGET BUTTON: callback received, free, user in t %d\n",wdata->user_int);
     //Free callback - free the data struct we allocated
     free(wdata);
     id = id;
