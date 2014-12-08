@@ -14,7 +14,7 @@
 void widget_clear_screen(uint16_t color)
 {
     //Clear the touch callbacks
-    touch_stack_clear();
+    touch_stack_reset();
     
     //Redraw the screen a fixed color
     GFXFillScreen(color);
