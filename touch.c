@@ -13,6 +13,12 @@
 //File globals
 int ev_fd;
 
+//Current cursor position
+unsigned char key_down;
+int cur_x;
+int cur_y;
+int cur_prs;
+
 
 
 void touch_init()
@@ -58,7 +64,51 @@ void touch_get_events()
             //      __u16 code;
             //      __s32 value;
             //      };
-            printf("TOUCH: Got an event type=%d code=%d value=%d\n",ev_temp.type,ev_temp.code,ev_temp.value);
+            
+            struct timeval time_temp = ev_temp.time;
+            
+            //For each type of event
+            if(ev_temp.type == EV_SYN)
+            {
+                //Event is a sync event, print it
+                printf("TOUCH: Got a Sync event, X=%d, Y=%d, PRS=%d\n",cur_x,cur_y,cur_prs);
+            }
+            else if(ev_temp.type == EV_KEY)
+            {
+                //Event is a KEY event, print it
+                //Is it a Touch event?
+                if(ev_temp.code == BTN_TOUCH)
+                {
+                    printf("TOUCH: Got a Key event type TOUCH\n");
+                }
+                else
+                {
+                    printf("TOUCH: Got a Key event, code %d\n",ev_temp.code);
+                }
+            }
+            else if(ev_temp.type == EV_ABS)
+            {
+                //Event is an ABS event, print it
+                if(ev_temp.code == ABS_X)
+                {
+                    //printf("TOUCH: X position: %d\n",ev_temp.value);
+                    cur_x = ev_temp.value;
+                }
+                else if(ev_temp.code == ABS_Y)
+                {
+                    //printf("TOUCH: Y position: %d\n",ev_temp.value);
+                    cur_y = ev_temp.value;
+                }
+                else if(ev_temp.code == ABS_PRESSURE)
+                {
+                    //printf("TOUCH: PRESSURE %d\n",ev_temp.value);
+                    cur_prs = ev_temp.value;
+                }
+                else
+                {
+                    printf("TOUCH: Got an unknown ABS event, code %d, value %d\n")
+                }
+            }
         }
         
     }
