@@ -74,13 +74,6 @@ void touch_read_kal()
             printf("TOUCH: Kal reached end of file\n");
             break;
         }
-        //Did we get anything returned that is at least our size big (18 chars)?
-        if(rtn <= 18)
-        {
-            //No good. continue.
-            printf("TOUCH: Kal found a bad line\n");
-            continue;
-        }
         //Try scanning the X line
         rtn = sscanf(buf,"LINE X gain=%d offs=%d\n",&gain_temp,&offs_temp);
         //Did we get it?
@@ -90,6 +83,7 @@ void touch_read_kal()
             cur_gain_x = gain_temp;
             cur_offs_x = offs_temp;
             printf("TOUCH: Got X gain=%d offs=%d\n",cur_gain_x,cur_offs_x);
+            kal_done = 1;
             continue;
         }
         
@@ -102,16 +96,15 @@ void touch_read_kal()
             cur_gain_y = gain_temp;
             cur_offs_y = offs_temp;
             printf("TOUCH: Got Y gain=%d offs=%d\n",cur_gain_y,cur_offs_y);
+            kal_done = 1;
             continue;
         }
         
         //Neither but the line was long enough
-        printf("TOUCH: Kal found a bad line (but it was long enough)\n");
+        printf("TOUCH: Kal found a bad line\n");
     }
     
     fclose(kal);
-    
-    kal_done = 1;
 }
 
 unsigned char touch_down()
