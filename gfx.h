@@ -45,6 +45,7 @@ void GFXSetTextSize(uint8_t s);
 void GFXSetTextWrap(uint8_t w);
 void GFXSetRotation(uint8_t r);
 void   GFXWrite(uint8_t);
+void GFXPrintString(int16_t xin, int16_t yin, char *text)
 
 int16_t GFXHeight(void);
 int16_t GFXWidth(void);

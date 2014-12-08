@@ -568,6 +568,46 @@ void GFXDrawChar(int16_t x, int16_t y, unsigned char c,
   }
 }
 
+//Print a string centered
+void GFXPrintString(int16_t xin, int16_t yin, uint16_t fgcolor, uint16_t bgcolor,char *text)
+{
+    //Calculate length of string
+    int total_width = 0;
+    //Total number of characters
+    unsigned int num_chars = 0;
+    //Don't allow more than 64 characters
+    for(int i = 0;i<64,i++)
+    {
+        //Is this character null?
+        if(text[i] != NULL)
+        {
+            //Not null, add width
+            total_width += textsize*6;
+            num_chars = i;
+        }
+        else
+        {
+            //Found a null character, break
+            break;
+        }
+    }
+    
+    //Set colors
+    textcolor = fgcolor;
+    textbgcolor = bgcolor;
+    
+    //Now calculate the x/y start positions
+    cursor_x = xin - (total_width >> 1);
+    cursor_y = yin - (textsize * 4);
+    
+    //Write the characters
+    for(int i = 0;i<num_chars;i++)
+    {
+        //Write this character
+        GFXWrite(text[i]);
+    }
+}
+
 void GFXSetCursor(int16_t x, int16_t y) {
   cursor_x = x;
   cursor_y = y;
