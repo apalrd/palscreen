@@ -85,6 +85,8 @@ int main()
     GFXDrawFastVLine(270,25,50,GFXPixelColor(0,0,0));
     GFXDrawFastHLine(245,50,50,GFXPixelColor(0,0,0));
     //Wait for them to get the touch event and make this the first kal point
+    has_been_pressed = 0;
+    sleep(2);
     while(1)
     {
         //Get touch events
@@ -123,6 +125,8 @@ int main()
     GFXDrawFastVLine(50,165,50,GFXPixelColor(0,0,0));
     GFXDrawFastHLine(25,190,50,GFXPixelColor(0,0,0));
     //Wait for them to get the touch event and make this the first kal point
+    has_been_pressed = 0;
+    sleep(2);
     while(1)
     {
         //Get touch events
@@ -161,6 +165,8 @@ int main()
     GFXDrawFastVLine(270,165,50,GFXPixelColor(0,0,0));
     GFXDrawFastHLine(245,190,50,GFXPixelColor(0,0,0));
     //Wait for them to get the touch event and make this the first kal point
+    has_been_pressed = 0;
+    sleep(2);
     while(1)
     {
         //Get touch events
@@ -194,17 +200,17 @@ int main()
     
     //Open a file for writing
     int fd = open("screen.kal",O_CREAT | O_WRONLY,S_IRUSR);
+    printf("File open returned %d\n",fd);
     
-    //Points
-    int point_x[] = {50, 270, 50, 270};
-    int point_y[] = {50, 50, 190, 190};
-    //Print the kal line
-    for(int i = 0;i < 4;i++)
-    {
-        fprintf(fd,"X=%d Y=%d x=%d y=%d\n",point_x[i],point_y[i],points_stored[i*2],points_stored[i*2+1]);
-        printf("X=%d Y=%d x=%d y=%d\n",point_x[i],point_y[i],points_stored[i*2],points_stored[i*2+1]);
-    }
-    
+    //Points file
+    fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
+    printf("X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
+    fprintf(fd,"X=%d Y=%d x=%d y=%d\n",270,50,points_stored[2],points_stored[3]);
+    printf("X=%d Y=%d x=%d y=%d\n",270,50,points_stored[2],points_stored[3]);
+    fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,190,points_stored[4],points_stored[5]);
+    printf("X=%d Y=%d x=%d y=%d\n",50,190,points_stored[4],points_stored[5]);
+    fprintf(fd,"X=%d Y=%d x=%d y=%d\n",270,190,points_stored[6],points_stored[7]);
+    printf("X=%d Y=%d x=%d y=%d\n",270,190,points_stored[6],points_stored[7]);
     //Close the file
     close(fd);
 
