@@ -112,3 +112,22 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     //Create the touch callback
     touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn, widget_int_btn_free);
 }
+
+//Draw a box like the button but fixed
+//Called a text box
+void widget_draw_txtbox(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, int text_size, char *text)
+{
+    //Draw a filled box of color bg
+    GFXFillRect(x1, y1, (x2-x1), (y2-y1), color_bg);
+    
+    //Draw an open rect of color fg
+    GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+    
+    //Calculate center
+    int center_x = x1 + ((x2-x1)>>1);
+    int center_y = y1 + ((y2-y1)>>1);
+    
+    //Draw text
+    GFXPrintString(center_x,center_y,color_fg,color_bg,text_size,text);
+}
+    

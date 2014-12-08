@@ -40,13 +40,13 @@ int main()
     
     //Setup 2 buttons with callbacks
     //void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text);
-    
-    printf("Starting the button init\n");
 
-    widget_draw_btn(220,340,135,235,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,3,"BTN1");
-    widget_draw_btn(5,105,5,105,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),NULL,1,3,"BTN2");
+    widget_draw_btn(5,102,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),NULL,0,3,"BTN1");
+    widget_draw_btn(219,316,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),NULL,1,3,"BTN2");
     
-    printf("Finished the button init\n");
+    
+    //Draw some flat text boxes in other sizes
+    widget_draw_txtbox(112,209,125,235,GFXPixelColor(0xFF,0x00,0x00),GFXPixelColor(0x00,0xFF,0x00),2,"SOME TEXT");
     
     touch_get_events();
     //Wait a tad
