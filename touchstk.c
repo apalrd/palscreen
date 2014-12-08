@@ -46,14 +46,14 @@ void touch_stack_proc()
             //See if the lo event is mapped (not null)
             if(touch_stack_glob[touched_last_id].evt_lo != NULL)
             {
-                touch_stack_glob[touched_last_id].evt_lo(touched_last_id,touch_stack_glob[new_id].user_ptr);
+                touch_stack_glob[touched_last_id].evt_lo(touched_last_id,touch_stack_glob[touched_last_id].user_ptr);
             }
             
             //If we are no longer touched down, also process the button event
             //But only if the event is mapped
             if(!touch_down() && touch_stack_glob[touched_last_id].evt_btn != NULL)
             {
-                touch_stack_glob[touched_last_id].evt_btn(touched_last_id,touch_stack_glob[new_id].user_ptr);
+                touch_stack_glob[touched_last_id].evt_btn(touched_last_id,touch_stack_glob[touched_last_id].user_ptr);
             }
         }
         
