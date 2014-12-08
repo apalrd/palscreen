@@ -598,8 +598,9 @@ void GFXDrawChar(int16_t x, int16_t y, unsigned char c,
 }
 
 //Print a string centered
-void GFXPrintString(int16_t xin, int16_t yin, uint16_t fgcolor, uint16_t bgcolor,char *text)
+void GFXPrintString(int16_t xin, int16_t yin, uint16_t fgcolor, uint16_t bgcolor,uint8_t text_size, char *text)
 {
+    textsize = text_size;
     //Calculate length of string
     int total_width = 0;
     //Total number of characters

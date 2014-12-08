@@ -67,7 +67,7 @@ void widget_int_btn_free(int id,struct widget_data_btn *wdata)
 //Colors fg is the 'drawn' color, bg is the 'pressed' color
 //Text is drawn using the opposite colors (bg normally, fg when pressed)
 //BG color is always used to draw a box around the element, FG when pressed
-void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text)
+void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, int text_size, char *text)
 {
     //Draw a filled box of color bg
     GFXFillRect(x1, y1, (x2-x1), (y2-y1), color_bg);
@@ -80,7 +80,7 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     int center_y = y1 + ((y2-y1)>>1);
     
     //Draw text
-    GFXPrintString(center_x,center_y,color_fg,color_bg,text);
+    GFXPrintString(center_x,center_y,color_fg,color_bg,text_size,text);
     
     //Malloc a new data structire
     struct widget_data_btn *wdata = malloc(sizeof(struct widget_data_btn));
