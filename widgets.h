@@ -10,7 +10,7 @@ struct widget_data_btn {
     int y1;
     int y2;
     char *text;
-    void *cbk
+    void *cbk;
     int user_int;
     uint16_t color_fg;
     uint16_t color_bg;
