@@ -25,8 +25,8 @@ void widget_clear_screen(uint16_t color);
 //BG color is always used to draw a box around the element, FG when pressed
 void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, int text_size, char *text);
 void widget_draw_txtbox(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, int text_size, char *text);
-void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level uint16_t color_ft, uint16_t color_bg);
-void widget_draw_thermo_h(int x1, int x2, int y1, int y2, uint8_t fill_level uint16_t color_ft, uint16_t color_bg);
+void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_ft, uint16_t color_bg);
+void widget_draw_thermo_h(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_ft, uint16_t color_bg);
 
 
 
