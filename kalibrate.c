@@ -213,12 +213,12 @@ int main()
     
     //Figure out the slope and offset now
     //first for X slope
-    float slope = ((points_stored[0]-points_stored[2])*0.5+(points_stored[4]-points_stored[6])*0.5)/(50-270);
+    float slope = (50-270)/((points_stored[0]-points_stored[2])*0.5+(points_stored[4]-points_stored[6])*0.5);
     //Now find X offset by extending  the slope down to 0
-    float offset = (50 * slope) - (points_stored[0] + points_stored[4])*0.5;
+    float offset = (points_stored[0] + points_stored[4])*0.5 - (50*slope);
     
     //Now make them fixed point
-    int slope_fxp = (int)(slope * 256.0);
+    int slope_fxp = (int)(slope * 65536);
     int offset_fxp = (int)offset;
     
     //Print them both to the console and file
@@ -226,12 +226,12 @@ int main()
     fprintf(fd,"LINE X gain=%d offs=%d\n",slope_fxp,offset_fxp);
     
     //now for Y
-    slope = ((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5)/(50-190);
+    slope = (50-190)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
     //Now find X offset by extending  the slope down to 0
-    offset = (50 * slope) - (points_stored[1] + points_stored[5])*0.5;
+    offset = (points_stored[1] + points_stored[5])*0.5 - (50*slope);
     
     //Now make them fixed point
-    slope_fxp = (int)(slope * 256.0);
+    slope_fxp = (int)(slope * 65536);
     offset_fxp = (int)offset;
     
     //Print them both to the console and file
