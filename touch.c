@@ -178,7 +178,7 @@ void touch_get_events()
             if(ev_temp.type == EV_SYN)
             {
                 //Event is a sync event, print it
-                printf("TOUCH: Got a Sync event, X=%d, Y=%d, PRS=%d\n",cur_x,cur_y,cur_prs);
+                //printf("TOUCH: Got a Sync event, X=%d, Y=%d, PRS=%d\n",cur_x,cur_y,cur_prs);
                 //At SYNC events, check pressure=0 for key up/down
                 if(cur_prs)
                 {
@@ -197,11 +197,11 @@ void touch_get_events()
                 //Is it a Touch event?
                 if(ev_temp.code == BTN_TOUCH)
                 {
-                    printf("TOUCH: Got a Key event type TOUCH\n");
+                    //printf("TOUCH: Got a Key event type TOUCH\n");
                 }
                 else
                 {
-                    printf("TOUCH: Got a Key event, code %d\n",ev_temp.code);
+                    //printf("TOUCH: Got a Key event, code %d\n",ev_temp.code);
                 }
             }
             else if(ev_temp.type == EV_ABS)
@@ -224,7 +224,7 @@ void touch_get_events()
                 }
                 else
                 {
-                    printf("TOUCH: Got an unknown ABS event, code %d, value %d\n",ev_temp.code,ev_temp.value);
+                    //printf("TOUCH: Got an unknown ABS event, code %d, value %d\n",ev_temp.code,ev_temp.value);
                 }
             }
         }

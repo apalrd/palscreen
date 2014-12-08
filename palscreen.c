@@ -35,59 +35,19 @@ int main()
 
 
     
-    //Change the color continuously
+    //Draw in a color
+    GFXFillScreen(0xFFFF);
     while(1)
     {
-        printf("Filling screen\n");
-        //To test, draw a color on the screen
-        GFXFillScreen(0xFFFF);
-        
-        printf("Swapping buffers\n");
-        
-        //Flip the buffers to draw this screen
-        GFXSwapBuffer();
-        
-        //Wait for at least a second
-        sleep(1);
+        //Process touch events
         touch_get_events();
         
-        //Blue
-        GFXFillScreen(GFXPixelColor(0x00,0x00,0xFF));
-        GFXSwapBuffer();
-        touch_get_events();
-        sleep(1);
-        
-        //Red
-        GFXFillScreen(GFXPixelColor(0xFF,0x00,0x00));
-        GFXSwapBuffer();
-        sleep(1);
-        touch_get_events();
-        
-        //Green
-        GFXFillScreen(GFXPixelColor(0x00,0xFF,0x00));
-        GFXSwapBuffer();
-        sleep(1);
-        touch_get_events();
-        
-        //Orange
-        GFXFillScreen(GFXPixelColor(0xFF,0x80,0x00));
-        GFXSwapBuffer();
-        sleep(1);
-        touch_get_events();
-        
-        //Magenta
-        GFXFillScreen(GFXPixelColor(0xFF,0x00,0xFF));
-        GFXSwapBuffer();
-        sleep(1);
-        touch_get_events();
-        
-        //Yellow
-        GFXFillScreen(GFXPixelColor(0xFF,0xFF,0x00));
-        GFXSwapBuffer();
-        sleep(1);
-        
-        //Get touch events after all of that
-        touch_get_events();
+        //If we are touched, draw the pixel
+        if(touch_down())
+        {
+            //Draw a pixel in green at the current location
+            GFXDrawPixel(touch_get_x(),touch_get_y(),GFXPixelColor(0x00,0xFF,0x00));
+        }
     }
 
 }
