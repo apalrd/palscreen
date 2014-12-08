@@ -55,7 +55,7 @@ void touch_get_events()
         else if (len > 0)
         {
             //Number of events
-            int nev = len/sizeof(struct input_event);
+            //int nev = len/sizeof(struct input_event);
             //Do stuff with this???
             
             //struct input_event {
@@ -64,8 +64,6 @@ void touch_get_events()
             //      __u16 code;
             //      __s32 value;
             //      };
-            
-            struct timeval time_temp = ev_temp.time;
             
             //For each type of event
             if(ev_temp.type == EV_SYN)
@@ -106,7 +104,7 @@ void touch_get_events()
                 }
                 else
                 {
-                    printf("TOUCH: Got an unknown ABS event, code %d, value %d\n")
+                    printf("TOUCH: Got an unknown ABS event, code %d, value %d\n",ev_temp.code,ev_temp.value);
                 }
             }
         }
