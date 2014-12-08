@@ -140,28 +140,28 @@ uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b)
 {
     return ((r>>3)<<vinfo.red.offset) | ((g>>2)<<vinfo.green.offset) | ((b>>3)<<vinfo.blue.offset);
 }
-
-//Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
-void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
+void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
 {
-    if(x>=320 || y>=240 || x<0 || y<0)
-    {
-        printf("GFX: Tried to print to bad location x=%d y=%d\n",x,y);
-    }
     //vinfo.bits_per_pixel>>3
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
     //bbp[location] = color;
-    //Check that the location is in bounds
-    if(location <= screensize && location >= 0)
+
+    uint16_t *newptr = (bbp + location);
+    *newptr = color;
+
+}
+
+//Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
+void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
+{
+    if(x>=320 || y>=240 || x<0 || y<0)
     {
-        uint16_t *newptr = (bbp + location);
-        *newptr = color;
+        printf("GFX: Tried to print to bad location x=%d y=%d\n",x,y);
+        return;
     }
-    else
-    {
-        printf("GFX: Bad location, tried to write to bad area\n");
-    }
+    GFXDrawPixelRaw(x,y,color);
+
 }
 
 // Draw a circle outline
@@ -275,7 +275,17 @@ void GFXFillCircleHelper(int16_t x0, int16_t y0, int16_t r,
 // Bresenham's algorithm - thx wikpedia
 void GFXDrawLine(int16_t x0, int16_t y0,
 			    int16_t x1, int16_t y1,
-			    uint16_t color) {
+			    uint16_t color)
+{
+    if(x0 >= _width) x0 = _width;
+    if(x1 >= _width) x1 = _width;
+    if(x0 < 0) x0 = 0;
+    if(x1 < 0) x1 = 0;
+    if(y0 >= _height) y0 = _height;
+    if(y1 >= _height) y1 = _height;
+    if(y0 < 0) y0 = 0;
+    if(y1 < 0) y1 = 0;
+    //Now we can use the unsafe draw pixel function
   int16_t steep = abs(y1 - y0) > abs(x1 - x0);
   if (steep) {
     swap(x0, y0);
@@ -302,9 +312,9 @@ void GFXDrawLine(int16_t x0, int16_t y0,
 
   for (; x0<=x1; x0++) {
     if (steep) {
-      GFXDrawPixel(y0, x0, color);
+      GFXDrawPixelRaw(y0, x0, color);
     } else {
-      GFXDrawPixel(x0, y0, color);
+      GFXDrawPixelRaw(x0, y0, color);
     }
     err -= dy;
     if (err < 0) {
@@ -326,20 +336,31 @@ void GFXDrawRect(int16_t x, int16_t y,
 
 void GFXDrawFastVLine(int16_t x, int16_t y,
 				 int16_t h, uint16_t color) {
-  // Update in subclasses if desired!
+    
+    //Check bounds to use unsafe pixel function
+    if(x >= _width) x = _width;
+    if(y >= _height) y = _height;
+    if(x < 0) x = 0;
+    if(y < 0) y = 0;
+    if(y+h >= _height) h = _height - y;
+    //For through the points
     for(int16_t i = 0;i<h;i++)
     {
-        GFXDrawPixel(x,y+i,color);
+        GFXDrawPixelRaw(x,y+i,color);
     }
   //GFXDrawLine(x, y, x, y+h-1, color);
 }
 
 void GFXDrawFastHLine(int16_t x, int16_t y,
 				 int16_t w, uint16_t color) {
-  // Update in subclasses if desired!
+    if(x >= _width) x = _width;
+    if(y >= _height) y = _height;
+    if(x < 0) x = 0;
+    if(y < 0) y = 0;
+    if(x+w >= _width) w = _width - x;
     for(int16_t i = 0;i<w;i++)
     {
-        GFXDrawPixel(x+i,y,color);
+        GFXDrawPixelRaw(x+i,y,color);
     }
   //GFXDrawLine(x, y, x+w-1, y, color);
 }
