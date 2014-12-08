@@ -226,9 +226,9 @@ int main()
     fprintf(fd,"LINE X gain=%d offs=%d\n",slope_fxp,offset_fxp);
     
     //now for Y
-    slope = (50-190)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
+    slope = (50-190)/((points_stored[1]-points_stored[5])*0.5+(points_stored[3]-points_stored[7])*0.5);
     //Now find Y offset by extending  the slope down to 0
-    offset = (points_stored[1] + points_stored[5])*0.5 - (50/slope);
+    offset = (points_stored[1] + points_stored[3])*0.5 - (50/slope);
     
     //Now make them fixed point
     slope_fxp = (int)(slope * 65536);
