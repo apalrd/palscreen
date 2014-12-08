@@ -213,7 +213,7 @@ int main()
     
     //Figure out the slope and offset now
     //first for X slope
-    float slope = (270-50)/((points_stored[0]-points_stored[2])+(points_stored[4]-points_stored[6])*0.5);
+    float slope = (50-270)/((points_stored[0]-points_stored[2])*0.5+(points_stored[4]-points_stored[6])*0.5);
     //Now find X offset by extending  the slope down to 0
     float offset = (50 * slope) - (points_stored[0] + points_stored[4])*0.5;
     
@@ -226,7 +226,7 @@ int main()
     fprintf(fd,"LINE X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
     
     //now for Y
-    slope = (270-50)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
+    slope = (50-190)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
     //Now find X offset by extending  the slope down to 0
     offset = (50 * slope) - (points_stored[1] + points_stored[5])*0.5;
     
@@ -241,6 +241,6 @@ int main()
     fclose(fd);
     
     //Color the screen green
-    GFXFillScreen(GFXPixelColor(0,0,0x255));
+    GFXFillScreen(GFXPixelColor(0,0x255,0));
 
 }
