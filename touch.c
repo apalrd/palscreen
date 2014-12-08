@@ -121,7 +121,7 @@ int touch_get_x()
     }
     //Use cals
     int temp = cur_y - cur_offs_x;
-    temp = (temp * cur_gain_x) >> 8;
+    temp = (temp * cur_gain_x) >> 16;
     return temp;
 }
 int touch_get_y()
@@ -133,7 +133,7 @@ int touch_get_y()
     }
     //Use cals
     int temp = cur_x - cur_offs_y;
-    temp = (temp * cur_gain_y) >> 8;
+    temp = (temp * cur_gain_y) >> 16;
     return temp;
 }
 int touch_get_prs()

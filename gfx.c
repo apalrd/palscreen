@@ -148,8 +148,12 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
     //bbp[location] = color;
-    uint16_t *newptr = (bbp + location);
-    *newptr = color;
+    //Check that the location is in bounds
+    if(location <= screensize)
+    {
+        uint16_t *newptr = (bbp + location);
+        *newptr = color;
+    }
 }
 
 // Draw a circle outline
