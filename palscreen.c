@@ -10,19 +10,26 @@ PalScreen user interface for PiTFT
 #include "palscreen.h"
 #include "gfx.h"
 //#include "touch.h"
+#include "backlight.h"
 
 //Main
 int main()
 {
-    printf("Starting GFX lib\n");
-    //Init the GFX lib
+    //Init GFX
+    printf("GFX init\n");
     GFXInit();
-    
-    printf("GFX init complete\n");
+    printf("GFX init complete!\n");
     
     //printf("Init touch\n");
     //touch_init();
     //printf("Touch init complete!\n");
+    
+    printf("GPIO init\n");
+    gpio_init();
+    printf("GPIO init complete!\n");
+    
+    //Turn on the backlight
+    gpio_backlight_on();
 
 
     
