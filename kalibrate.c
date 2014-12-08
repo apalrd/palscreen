@@ -199,12 +199,12 @@ int main()
     printf("Got cal for point x=270 y=190, touched at x=%d y=%d\n",points_stored[6],points_stored[7]);
     
     //Open a file for writing
-    int fd = open("screen.kal",O_CREAT | O_WRONLY,S_IRUSR);
+    FILE *fd = open("screen.kal",O_CREAT | O_WRONLY,S_IRUSR);
     printf("File open returned %d\n",fd);
-    
+    int rtn;
     //Points file
-    fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
-    printf("X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
+    rtn = fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
+    printf("X=%d Y=%d x=%d y=%d rtn=%d\n",50,50,points_stored[0],points_stored[1],rtn);
     fprintf(fd,"X=%d Y=%d x=%d y=%d\n",270,50,points_stored[2],points_stored[3]);
     printf("X=%d Y=%d x=%d y=%d\n",270,50,points_stored[2],points_stored[3]);
     fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,190,points_stored[4],points_stored[5]);
