@@ -10,42 +10,40 @@
 #include "libevdev/libevdev.h"
 
 
-struct libevdev *dev = NULL;
-int fd;
-int rc = 1;
+//File globals
+struct input_event *ev_temp;
+int ev_fd;
 
 void touch_init()
 {
     
-    fd = open("/dev/input/touchscreen", O_RDONLY|O_NONBLOCK);
-    rc = libevdev_new_from_fd(fd, &dev);
-    if (rc < 0) {
-        fprintf(stderr, "Failed to init libevdev (%d)\n", rc);
-    }
-    printf("Input device name: \"%s\"\n", libevdev_get_name(dev));
-    printf("Input device ID: bus %#x vendor %#x product %#x\n",
-           libevdev_get_id_bustype(dev),
-           libevdev_get_id_vendor(dev),
-           libevdev_get_id_product(dev));
-    if (!libevdev_has_event_type(dev, EV_REL) ||
-        !libevdev_has_event_code(dev, EV_KEY, BTN_LEFT)) {
-        printf("This device does not look like a mouse\n");
-        //exit(1);
-    }
-
+    ev_fd = open("/dev/input/touchscreen", O_RDONLY|O_NONBLOCK);
+    
+    //Do the ioctls to get the device info
+    
+    //Read all of the stuff from the kernel buffer??
+    touch_get_events();
   
 }
 
 void touch_get_events()
 {
-    //Get all of the recent touch events
-    do {
-        struct input_event ev;
-        rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-        if (rc == 0)
-            printf("Event: %s %s %d\n",
-                   libevdev_get_event_type_name(ev.type),
-                   libevdev_get_event_code_name(ev.type, ev.code),
-                   ev.value);
-    } while (rc == 1 || rc == 0);
+    int len = 0;
+    
+    //Get all of the recent touch events from the kernel
+    while(1)
+    {
+        //Infinite loops are cooler
+        len = read(dev->fd, next, free_elem * sizeof(struct input_event));
+        if (len < 0) {
+            return;//End of queue
+        } else if (len > 0 && len % sizeof(struct input_event) != 0)
+            printf("TOUCH: Bad read from touch dev\n");
+            return;//Bad stuffs
+        else if (len > 0) {
+            int nev = len/sizeof(struct input_event);
+            //Do stuff with this???
+        }
+        
+    }
 }
