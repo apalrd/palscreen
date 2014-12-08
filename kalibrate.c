@@ -215,7 +215,7 @@ int main()
     //first for X slope
     float slope = (50-270)/((points_stored[0]-points_stored[2])*0.5+(points_stored[4]-points_stored[6])*0.5);
     //Now find X offset by extending  the slope down to 0
-    float offset = (points_stored[0] + points_stored[4])*0.5 - (slope/50);
+    float offset = (points_stored[0] + points_stored[4])*0.5 - (50/slope);
     
     //Now make them fixed point
     int slope_fxp = (int)(slope * 65536);
@@ -228,7 +228,7 @@ int main()
     //now for Y
     slope = (50-190)/((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5);
     //Now find X offset by extending  the slope down to 0
-    offset = (points_stored[1] + points_stored[5])*0.5 - (slope/50);
+    offset = (points_stored[1] + points_stored[5])*0.5 - (50/slope);
     
     //Now make them fixed point
     slope_fxp = (int)(slope * 65536);
