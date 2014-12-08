@@ -51,6 +51,11 @@ void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
     
     //Draw the outline box too
     GFXDrawRect(wdata->x1,wdata->y1,w,h,wdata->color_fg);
+
+    
+    //Calculate center
+    int center_x = wdata->x1 + (w>>1);
+    int center_y = wdata->y1 + (h>>1);
     
     //Redraw the text the opposite color too
     GFXPrintString(center_x,center_y,wdata->color_fg,wdata->color_bg,wdata->text_size,wg_data->text);
