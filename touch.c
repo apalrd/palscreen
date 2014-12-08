@@ -59,13 +59,30 @@ void touch_read_kal()
     int gain_temp = 0;
     int offs_temp = 0;
     
+    char buf[64];
+    
     printf("TOUCH: Opened kal file screen.kal\n");
     
     //Fscanf in a while loop to get meaningful data
     while(1)
     {
-        //Fscanf for useful stuff
-        rtn = fscanf(kal,"LINE X gain=%d offs=%d\n",&gain_temp,&offs_temp);
+        //Read the next line in the file
+        rtn = fgets(&buf,64,kal);
+        //Did we reach the end of file?
+        if(feof(kal))
+        {
+            printf("TOUCH: Kal reached end of file\n");
+            break;
+        }
+        //Did we get anything returned that is at least our size big (18 chars)?
+        if(rtn <= 18)
+        {
+            //No good. continue.
+            printf("TOUCH: Kal found a bad line\n");
+            continue;
+        }
+        //Try scanning the X line
+        rtn = sscanf(buf,"LINE X gain=%d offs=%d\n",&gain_temp,&offs_temp);
         //Did we get it?
         if(rtn != 0)
         {
@@ -77,7 +94,7 @@ void touch_read_kal()
         }
         
         //Nope, maybe try Y line
-        rtn = fscanf(kal,"LINE Y gain=%d offs=%d\n",&gain_temp,&offs_temp);
+        rtn = sscanf(buf,"LINE Y gain=%d offs=%d\n",&gain_temp,&offs_temp);
         //Did we get it?
         if(rtn != 0)
         {
@@ -88,14 +105,8 @@ void touch_read_kal()
             continue;
         }
         
-        //Neither, see if we reached the end of the file
-        if(feof(kal))
-        {
-            printf("TOUCH: Got end of kal file!\n");
-            break;
-        }
-        
-        printf("TOUCH: Iteration of the loop\n");
+        //Neither but the line was long enough
+        printf("TOUCH: Kal found a bad line (but it was long enough)\n");
     }
     
     fclose(kal);
