@@ -63,7 +63,7 @@ void touch_read_kal()
     while(1)
     {
         //Fscanf for useful stuff
-        rtn = fscanf(kal,"LINE X gain=%d offs=%d\n",&gain_Temp,&offs_temp);
+        rtn = fscanf(kal,"LINE X gain=%d offs=%d\n",&gain_temp,&offs_temp);
         //Did we get it?
         if(rtn != 0)
         {
@@ -75,7 +75,7 @@ void touch_read_kal()
         }
         
         //Nope, maybe try Y line
-        rtn = fscanf(kal,"LINE Y gain=%d offs=%d\n",&gain_Temp,&offs_temp);
+        rtn = fscanf(kal,"LINE Y gain=%d offs=%d\n",&gain_temp,&offs_temp);
         //Did we get it?
         if(rtn != 0)
         {
