@@ -223,7 +223,7 @@ int main()
     
     //Print them both to the console and file
     printf("LINE X gain=%d offs=%d\n",slope_fxp,offset_fxp);
-    fprintf(fd,"LINE X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    fprintf(fd,"LINE X gain=%d offs=%d\n",slope_fxp,offset_fxp);
     
     //now for Y
     slope = ((points_stored[1]-points_stored[5])+(points_stored[3]-points_stored[7])*0.5)/(50-190);
@@ -236,7 +236,7 @@ int main()
     
     //Print them both to the console and file
     printf("LINE Y gain=%d offs=%d\n",slope_fxp,offset_fxp);
-    fprintf(fd,"LINE Y gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    fprintf(fd,"LINE Y gain=%d offs=%d\n",slope_fxp,offset_fxp);
     //Close the file
     fclose(fd);
     
