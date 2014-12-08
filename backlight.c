@@ -59,7 +59,6 @@ void backlight_poke()
         //Turn it on immediately
         backlight_on();
     }
-    printf("BACKLIGHT: Was Poked\n");
 }
 
 void backlight_check()
@@ -83,12 +82,10 @@ void backlight_check()
             //Turn the backlight off
             backlight_off();
         }
-        printf("BACKLIGHT: Checking, light is ON, delta T is %d\n", delta_t);
     }
     //Otherwise the backlight is off
     else
     {
-        printf("BACKLIGHT: Checking, light is OFF\n");
         //Do nothing, poking the backlight will turn it back on
     }
 }
