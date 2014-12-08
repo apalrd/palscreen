@@ -79,8 +79,8 @@ int main()
     //Setup 2 buttons with callbacks
     //void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text);
 
-    widget_draw_btn(5,102,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),callback,0,3,"T+T");
-    widget_draw_btn(219,316,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),callback,1,3,"T-T");
+    widget_draw_btn(5,102,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0xFF,0,0),callback,0,5,"-");
+    widget_draw_btn(219,316,5,115,GFXPixelColor(0,0xFF,0),GFXPixelColor(0,0,0xFF),callback,1,5,"+");
     
     
     //Draw some flat text boxes in other sizes
