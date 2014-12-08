@@ -11,43 +11,44 @@ PalScreen user interface for PiTFT
 #include "gfx.h"
 #include "touch.h"
 #include "backlight.h"
+#include "touchstk.h"
 
 //Calling convention for callbacks:
 //For events TD (touch down), LO (lift off), BTN (button):
-//void event_function(char touch_id,void *user_ptr)
+//void event_function(int touch_id,void *user_ptr)
 //For event DN (Down):
-//void event_function(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+//void event_function(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 
 //Callbacks
-void evt0_td(char touch_id,void *user_ptr)
+void evt0_td(int touch_id,void *user_ptr)
 {
     printf("TOUCH DOWN PRIMARY id=%d\n",touch_id);
 }
-void evt1_td(char touch_id,void *user_ptr)
+void evt1_td(int touch_id,void *user_ptr)
 {
     printf("TOUCH DOWN SECONDARY id=%d\n",touch_id);
 }
-void evt0_lo(char touch_id,void *user_ptr)
+void evt0_lo(int touch_id,void *user_ptr)
 {
     printf("LIFT OFF PRIMARY id=%d\n",touch_id);
 }
-void evt1_lo(char touch_id,void *user_ptr)
+void evt1_lo(int touch_id,void *user_ptr)
 {
     printf("LIFT OFF SECONDARY id=%d\n",touch_id);
 }
-void evt0_btn(char touch_id,void *user_ptr)
+void evt0_btn(int touch_id,void *user_ptr)
 {
     printf("BUTTON PRIMARY id=%d\n",touch_id);
 }
-void evt1_btn(char touch_id,void *user_ptr)
+void evt1_btn(int touch_id,void *user_ptr)
 {
     printf("BUTTON SECONDARY id=%d\n",touch_id);
 }
-void evt0_dn(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+void evt0_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 {
     printf("DOWN PRIMARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
 }
-void evt1_dn(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+void evt1_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 {
     printf("DOWN SECONDARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
 }

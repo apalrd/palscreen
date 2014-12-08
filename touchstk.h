@@ -4,9 +4,9 @@
 
 //Calling convention for callbacks:
 //For events TD (touch down), LO (lift off), BTN (button):
-//void event_function(char touch_id,void *user_ptr)
+//void event_function(int touch_id,void *user_ptr)
 //For event DN (Down):
-//void event_function(char touch_id,void *user_ptr,int xpos,int ypos,int prerssure)
+//void event_function(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 
 //Touch stack element struct
 struct touch_stack_elem {
@@ -33,7 +33,7 @@ void touch_stack_proc();
 //Reset the touch mapping stack to re-draw
 void touch_stack_reset();
 //Delete a specific element off the stack
-void touch_stack_free(char id);
+void touch_stack_free(int id);
 //Allocate an element on the touch stack
 int touch_stack_alloc(int x1, int x2, int y1, int y2, int usr_int, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn);
 //Find the first element that is covered by the range

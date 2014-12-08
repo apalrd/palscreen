@@ -20,7 +20,7 @@ void touch_stack_proc()
     //Process the touch stack
     
     //New touched id defaults to none
-    char new_id = -1;
+    int new_id = -1;
     
     //Cache x and y since they have to do math internally
     int xpos = touch_get_x();
@@ -89,7 +89,7 @@ void touch_stack_reset()
 }
 
 //Delete a specific element off the stack
-void touch_stack_free(char id)
+void touch_stack_free(int id)
 {
     //Check the ID is in bounds
     if(id > 31 || id < 0)
