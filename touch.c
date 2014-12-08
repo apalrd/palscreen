@@ -19,6 +19,8 @@ int cur_x;
 int cur_y;
 int cur_prs;
 
+//Define the boundaries of the screen
+
 
 
 void touch_init()
@@ -31,6 +33,27 @@ void touch_init()
     //Read all of the stuff from the kernel buffer??
     touch_get_events();
   
+}
+
+unsigned char touch_down()
+{
+    return key_down;
+}
+
+int touch_get_x()
+{
+    //Return scaled x
+    return cur_x;
+}
+int touch_get_y()
+{
+    //Return scaled y
+    return cur_y;
+}
+int touch_get_prs()
+{
+    //Return raw pressure
+    return cur_prs;
 }
 
 void touch_get_events()
@@ -70,6 +93,17 @@ void touch_get_events()
             {
                 //Event is a sync event, print it
                 printf("TOUCH: Got a Sync event, X=%d, Y=%d, PRS=%d\n",cur_x,cur_y,cur_prs);
+                //At SYNC events, check pressure=0 for key up/down
+                if(cur_prs)
+                {
+                    //Key is down
+                    key_down = 1;
+                }
+                else
+                {
+                    //Key must be up
+                    key_down = 0;
+                }
             }
             else if(ev_temp.type == EV_KEY)
             {
