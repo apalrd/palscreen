@@ -34,6 +34,7 @@ void widget_int_btn_td(int id,struct widget_data_btn *wdata)
     //Redraw the text the opposite color too
    
     //Skip that for now
+    id = id;
 }
 void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
 {
@@ -47,16 +48,19 @@ void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
     
     //Redraw the text the opposite color too
     //Skip that for now
+    id = id;
 }
 void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
 {
     //Button function, call the user's callback
     printf("WIDGET BUTTON: callback received, user int %d\n",wdata->user_int);
+    id = id;
 }
 void widget_int_btn_free(int id,struct widget_data_btn *wdata)
 {
     //Free callback - free the data struct we allocated
     free(wdata);
+    id = id;
 }
 
 
@@ -73,8 +77,8 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
     
     //Calculate center
-    int center_x = x1 + (x2-x1)>>1;
-    int center_y = y1 + (y2-y1)>>1;
+    int center_x = x1 + ((x2-x1)>>1);
+    int center_y = y1 + ((y2-y1)>>1);
     
     //Draw text
     //GFXPrintString(center_x,center_y,color_fg,color_bg,text);
@@ -94,5 +98,5 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     wdata->text = text;
     
     //Create the touch callback
-    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn);
+    touch_stack_alloc(x1, x2, y1, y2, wdata, widget_int_btn_td, widget_int_btn_lo, NULL, widget_int_btn_btn, widget_int_btn_Free);
 }
