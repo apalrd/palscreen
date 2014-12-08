@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include "typedefs.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "touchstk.h"
 #include "widgets.h"
 #include "gfx.h"
@@ -20,7 +21,7 @@ void widget_clear_screen(uint16_t color)
 }
 
 //Internal button functions
-void widget_int_btn_td(int id,void* wdata)
+void widget_int_btn_td(int id,struct widget_data_btn *wdata)
 {
     //touch down function - Draw the boxes in inverted colors
     int w = wdata->x2 - wdata->x1;
@@ -34,7 +35,7 @@ void widget_int_btn_td(int id,void* wdata)
    
     //Skip that for now
 }
-void widget_int_btn_lo(int id,void* wdata)
+void widget_int_btn_lo(int id,struct widget_data_btn *wdata)
 {
     //lift off function - Draw the boxes in correct colors
     int w = wdata->x2 - wdata->x1;
@@ -47,12 +48,12 @@ void widget_int_btn_lo(int id,void* wdata)
     //Redraw the text the opposite color too
     //Skip that for now
 }
-void widget_int_btn_btn(int id,void* wdata)
+void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
 {
     //Button function, call the user's callback
     printf("WIDGET BUTTON: callback received, user int %d\n",wdata->user_int);
 }
-void widget_int_btn_free(int id,void* wdata)
+void widget_int_btn_free(int id,struct widget_data_btn *wdata)
 {
     //Free callback - free the data struct we allocated
     free(wdata);

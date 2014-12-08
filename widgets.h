@@ -14,7 +14,7 @@ struct widget_data_btn {
     int user_int;
     uint16_t color_fg;
     uint16_t color_bg;
-};
+} widget_data_btn;
 
 //Clear screen to a color
 void widget_clear_screen(uint16_t color);
