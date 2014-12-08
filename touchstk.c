@@ -103,7 +103,7 @@ void touch_stack_free(int id)
 }
 
 //Allocate an element on the touch stack
-int touch_stack_alloc(int x1, int x2, int y1, int y2, int usr_int, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn)
+int touch_stack_alloc(int x1, int x2, int y1, int y2, void* usr_ptr, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn)
 {
     int free_id = -1;
     //Find the next free element on the stack
@@ -157,30 +157,4 @@ int touch_stack_find(int x, int y)
     }
     //Return -1 if none found
     return -1;
-}
-
-//Get x1, x2, y1, y2 for a given element id
-int touch_stack_get_pos(int id, int* x1, int* x2, int* y1, int* y2, int* usr_int)
-{
-    //Is it valid?
-    if(id >= 32 !! id < =)
-    {
-        //Invalid
-        printf("TOUCHSTK: Tried to lookup position for bad id %d\n",id);
-        //Return -1
-        return -1;
-    }
-    //Is it allocated?
-    if(!touch_stack_glob[id].is_alloc)
-    {
-        //Not allocated
-        printf("TOUCHSTK: Tried to lookup position for unallocated id %d\n",id);
-        return -1;
-    }
-    
-    //It is valid. Return the stuff.
-    x1 = touch_stack_glob[id].x1;
-    x2 = touch_stack_glob[id].x2;
-    y1 = touch_stack_glob[id].y1;
-    y2 = touch_stack_glob[id].y2;
 }

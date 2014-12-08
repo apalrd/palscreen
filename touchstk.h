@@ -16,7 +16,7 @@ struct touch_stack_elem {
     int y1;
     int y2;
     //Callback pointers
-    void (*evt_td)(int, void*);
+    void (*evt_td)(int, void*,int,int,int);
     void (*evt_lo)(int, void*);
     void (*evt_dn)(int, void*);
     void (*evt_btn)(int, void*);
@@ -35,10 +35,8 @@ void touch_stack_reset();
 //Delete a specific element off the stack
 void touch_stack_free(int id);
 //Allocate an element on the touch stack
-int touch_stack_alloc(int x1, int x2, int y1, int y2, int usr_int, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn);
+int touch_stack_alloc(int x1, int x2, int y1, int y2, void* user_ptr, void* evt_td, void* evt_lo, void* evt_dn, void* evt_btn);
 //Find the first element that is covered by the range
 int touch_stack_find(int x, int y);
-//Get x1, x2, y1, y2 for a given element id
-int touch_stack_get_pos(int id, int* x1, int* x2, int* y1, int* y2, int* usr_int);
 
 #endif
