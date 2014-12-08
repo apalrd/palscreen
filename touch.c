@@ -7,12 +7,13 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/input.h>
-#include "libevdev/libevdev.h"
 
 
 //File globals
 struct input_event *ev_temp;
 int ev_fd;
+
+
 
 void touch_init()
 {
@@ -34,15 +35,29 @@ void touch_get_events()
     while(1)
     {
         //Infinite loops are cooler
-        len = read(dev->fd, next, free_elem * sizeof(struct input_event));
-        if (len < 0) {
+        len = read(dev->fd, &ev_temp, sizeof(struct ev_temp));
+        if (len < 0)
+        {
             return;//End of queue
-        } else if (len > 0 && len % sizeof(struct input_event) != 0)
+        }
+        else if (len > 0 && len % sizeof(struct ev_temp) != 0)
+        {
             printf("TOUCH: Bad read from touch dev\n");
             return;//Bad stuffs
-        else if (len > 0) {
-            int nev = len/sizeof(struct input_event);
+        }
+        else if (len > 0)
+        {
+            //Number of events
+            int nev = len/sizeof(struct ev_temp);
             //Do stuff with this???
+            
+            //struct input_event {
+            //      struct timeval time;
+            //      __u16 type;
+            //      __u16 code;
+            //      __s32 value;
+            //      };
+            printf("TOUCH: Got an event type=%d code=%d value=%d\n"ev_temp.type,ev_temp.code,ev_temp.value);
         }
         
     }
