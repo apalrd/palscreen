@@ -222,7 +222,7 @@ int main()
     int offset_fxp = (int)offset;
     
     //Print them both to the console and file
-    printf("LINE X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    printf("LINE X gain=%d offs=%d\n",slope_fxp,offset_fxp);
     fprintf(fd,"LINE X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
     
     //now for Y
@@ -235,7 +235,7 @@ int main()
     offset_fxp = (int)offset;
     
     //Print them both to the console and file
-    printf("LINE Y gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    printf("LINE Y gain=%d offs=%d\n",slope_fxp,offset_fxp);
     fprintf(fd,"LINE Y gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
     //Close the file
     fclose(fd);

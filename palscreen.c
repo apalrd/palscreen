@@ -20,8 +20,10 @@ int main()
     GFXInit();
     printf("GFX init complete!\n");
     
-    printf("Init touch\n");
+    printf("Touch init\n");
     touch_init();
+    printf("Touch reading kal\n");
+    touch_read_kal();
     printf("Touch init complete!\n");
     
     printf("Backlight init\n");

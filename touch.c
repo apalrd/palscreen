@@ -18,8 +18,11 @@ unsigned char key_down;
 int cur_x;
 int cur_y;
 int cur_prs;
-
-//Define the boundaries of the screen
+int cur_gain_x;
+int cur_offs_x;
+int cur_gain_y;
+int cur_offs_y;
+unsigned char kal_done;
 
 
 
@@ -28,11 +31,72 @@ void touch_init()
     
     ev_fd = open("/dev/input/touchscreen", O_RDONLY|O_NONBLOCK);
     
-    //Do the ioctls to get the device info
+    //One gain
+    cur_gain_x = 0x00FF;
+    cur_gain_y = 0x00FF;
+    
+    //Zero offset
+    cur_offs_x = 0;
+    cur_offs_y = 0;
+    
+    //Kal not done
+    kal_done = 0;
     
     //Read all of the stuff from the kernel buffer??
     touch_get_events();
   
+}
+
+//Read calibration from kal file
+//Note: We can't do this in init since we also use this code for kalibrate
+void touch_read_kal()
+{
+    //Fopen the kal file
+    FILE *kal = fopen("screen.kal","r");
+    
+    int rtn = 0;
+    
+    int gain_temp = 0;
+    int offs_temp = 0;
+    
+    //Fscanf in a while loop to get meaningful data
+    while(1)
+    {
+        //Fscanf for useful stuff
+        rtn = fscanf(kal,"LINE X gain=%d offs=%d\n",&gain_Temp,&offs_temp);
+        //Did we get it?
+        if(rtn != 0)
+        {
+            //Got it! Continue
+            cur_gain_x = gain_temp;
+            cur_offs_x = offs_temp;
+            printf("TOUCH: Got X gain=%d offs=%d\n",cur_gain_x,cur_offs_x);
+            continue;
+        }
+        
+        //Nope, maybe try Y line
+        rtn = fscanf(kal,"LINE Y gain=%d offs=%d\n",&gain_Temp,&offs_temp);
+        //Did we get it?
+        if(rtn != 0)
+        {
+            //Got it! Continue
+            cur_gain_y = gain_temp;
+            cur_offs_y = offs_temp;
+            printf("TOUCH: Got Y gain=%d offs=%d\n",cur_gain_y,cur_offs_y);
+            continue;
+        }
+        
+        //Neither, see if we reached the end of the file
+        if(feof(kal))
+        {
+            printf("TOUCH: Got end of kal file!\n");
+            break;
+        }
+    }
+    
+    fclose(kal);
+    
+    kal_done = 1;
 }
 
 unsigned char touch_down()
@@ -43,12 +107,26 @@ unsigned char touch_down()
 int touch_get_x()
 {
     //Return scaled x - note that touchscreen is inverted
-    return cur_y;
+    if(!kal_done)
+    {
+        return cur_y;
+    }
+    //Use cals
+    int temp = cur_y - cur_offs_x;
+    temp = (temp * cur_gain_x) >> 8;
+    return temp;
 }
 int touch_get_y()
 {
     //Return scaled y - note that touchscreen is inverted
-    return cur_x;
+    if(!kal_done)
+    {
+        return cur_x;
+    }
+    //Use cals
+    int temp = cur_x - cur_offs_y;
+    temp = (temp * cur_gain_y) >> 8;
+    return temp;
 }
 int touch_get_prs()
 {
