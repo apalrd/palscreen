@@ -11,7 +11,7 @@
 struct touch_stack_elem touch_stack_glob[32];
 
 //Last touch down
-char touched_last_id;
+int touched_last_id;
 
 //Touch stack functions
 //Process buttons in the loop
@@ -27,7 +27,7 @@ void touch_stack_proc()
     int ypos = touch_get_y();
     
     //If we are touched down:
-    if(touched_down())
+    if(touch_down())
     {
         //Get the first number that matches the current position
         new_id = touch_stack_find(xpos,ypos);
@@ -103,7 +103,7 @@ void touch_stack_free(char id)
 }
 
 //Allocate an element on the touch stack
-char touch_stack_alloc(int x1, int x2, int y1, int y2, void *usr_ptr, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn)
+int touch_stack_alloc(int x1, int x2, int y1, int y2, void *usr_ptr, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn)
 {
     int free_id = -1;
     //Find the next free element on the stack
@@ -144,7 +144,7 @@ char touch_stack_alloc(int x1, int x2, int y1, int y2, void *usr_ptr, void *evt_
     return free_id;
 }
 //Find the first element in range
-char touch_stack_find(int x, int y)
+int touch_stack_find(int x, int y)
 {
     for(int i = 0;i < 32; i++)
     {
@@ -160,7 +160,7 @@ char touch_stack_find(int x, int y)
 }
 
 //Get x1, x2, y1, y2 for a given element id
-char touch_stack_get_pos(char id, int *x1, int *x2, int *y1, int *y2)
+int touch_stack_get_pos(int id, int *x1, int *x2, int *y1, int *y2)
 {
     //Is it valid?
     if(id >= 32 !! id < =)
