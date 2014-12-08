@@ -146,10 +146,11 @@ void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level, ui
 {
     //Calculate partial fill level
     int partial_fill = ((fill_level)*(y2-y1))>>8;
+    int partial_fill_inv = (x2-x1)-partial_fill;
     
     //Draw the two background rectangles
-    GFXFillRect(x1, y1, (x2-x1), partial_fill, color_bg);
-    GFXFillRect(x1, y1, (x2-x1), partial_fill, color_fg);
+    GFXFillRect(x1, y1, (x2-x1), partial_fill_inv, color_bg);
+    GFXFillRect(x1, y1+partial_fill_inv, (x2-x1), partial_fill, color_fg);
     
     //Draw a box around all of it
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
@@ -158,10 +159,11 @@ void widget_draw_thermo_h(int x1, int x2, int y1, int y2, uint8_t fill_level, ui
 {
     //Calculate partial fill level
     int partial_fill = ((fill_level)*(x2-x1))>>8;
+    int partial_fill_inv = (x2-x1)-partial_fill;
     
     //Draw the two background rectangles
-    GFXFillRect(x1, y1, partial_fill,(y2-y1), color_bg);
-    GFXFillRect(x1, y1, partial_fill, (y2-y1), color_fg);
+    GFXFillRect(x1, y1, partial_fill_inv,(y2-y1), color_bg);
+    GFXFillRect(x1+partial_fill_inv, y1, partial_fill, (y2-y1), color_fg);
     
     //Draw a box around all of it
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
