@@ -70,11 +70,17 @@ void widget_int_btn_free(int id,struct widget_data_btn *wdata)
 //BG color is always used to draw a box around the element, FG when pressed
 void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t color_bg, void *cbk, int usr_int, char *text)
 {
+    
+    //Drawing initial box
+    printf("Drawing initial box, user int is %d\n",usr_int);
     //Draw a filled box of color bg
     GFXFillRect(x1, y1, (x2-x1), (y2-y1), color_bg);
     
     //Draw an open rect of color fg
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+    
+    //Continue
+    printf("Allocating widget space\n");
     
     //Calculate center
     int center_x = x1 + ((x2-x1)>>1);
@@ -84,7 +90,9 @@ void widget_draw_btn(int x1, int x2, int y1, int y2, uint16_t color_fg, uint16_t
     //GFXPrintString(center_x,center_y,color_fg,color_bg,text);
     
     //Malloc a new data structire
-    struct widget_data_btn *wdata = malloc(sizeof(widget_data_btn));
+    struct widget_data_btn *wdata = malloc(sizeof(struct widget_data_btn));
+    
+    printf("Malloc returned %d\n",wdata);
     
     //Fill the struct
     wdata->x1 = x1;

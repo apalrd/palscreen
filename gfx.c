@@ -144,6 +144,10 @@ uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b)
 //Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
 void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
+    if(x>=320 || y>=240 || x<0 || y<0)
+    {
+        printf("GFX: Tried to print to bad location x=%d y=%d\n",x,y);
+    }
     //vinfo.bits_per_pixel>>3
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
@@ -153,6 +157,10 @@ void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
     {
         uint16_t *newptr = (bbp + location);
         *newptr = color;
+    }
+    else
+    {
+        printf("GFX: Bad location, tried to write to bad area\n");
     }
 }
 
