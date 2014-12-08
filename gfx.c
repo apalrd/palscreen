@@ -153,7 +153,7 @@ void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
 }
 
 //Draw a pixel on the current screen buffer (dual-buffer sliding screen method)
-void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
+void GFXDrawPixel(int16_t x, int16_t y, uint16_t color)
 {
     if(x>=320 || y>=240 || x<0 || y<0)
     {
