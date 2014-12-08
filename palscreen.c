@@ -23,34 +23,42 @@ PalScreen user interface for PiTFT
 void evt0_td(int touch_id,void *user_ptr)
 {
     printf("TOUCH DOWN PRIMARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt1_td(int touch_id,void *user_ptr)
 {
     printf("TOUCH DOWN SECONDARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt0_lo(int touch_id,void *user_ptr)
 {
     printf("LIFT OFF PRIMARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt1_lo(int touch_id,void *user_ptr)
 {
     printf("LIFT OFF SECONDARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt0_btn(int touch_id,void *user_ptr)
 {
     printf("BUTTON PRIMARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt1_btn(int touch_id,void *user_ptr)
 {
     printf("BUTTON SECONDARY id=%d\n",touch_id);
+    user_ptr = user_ptr;
 }
 void evt0_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 {
     printf("DOWN PRIMARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
+    user_ptr = user_ptr;
 }
 void evt1_dn(int touch_id,void *user_ptr,int xpos,int ypos,int pressure)
 {
     printf("DOWN SECONDARY id=%d x=%d y=%d prs=%d\n",touch_id,xpos,ypos,pressure);
+    user_ptr = user_ptr;
 }
 
 //Main
