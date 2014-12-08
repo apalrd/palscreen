@@ -548,7 +548,7 @@ void GFXDrawChar(int16_t x, int16_t y, unsigned char c,
     if (i == 5) 
       line = 0x0;
     else 
-      line = pgm_read_byte(font+(c*5)+i);
+      line = pgm_read_byte(ascii_font+(c*5)+i);
     for (int8_t j = 0; j<8; j++) {
       if (line & 0x1) {
         if (size == 1) // default size

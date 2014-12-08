@@ -35,10 +35,10 @@ void touch_stack_reset();
 //Delete a specific element off the stack
 void touch_stack_free(char id);
 //Allocate an element on the touch stack
-char touch_stack_alloc(int x1, int x2, int y1, int y2, int usr_int, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn);
+int touch_stack_alloc(int x1, int x2, int y1, int y2, int usr_int, void *evt_td, void *evt_lo, void *evt_dn, void *evt_btn);
 //Find the first element that is covered by the range
-char touch_stack_find(int x, int y);
+int touch_stack_find(int x, int y);
 //Get x1, x2, y1, y2 for a given element id
-char touch_stack_get_pos(char id, int *x1, int *x2, int *y1, int *y2, int *usr_int);
+int touch_stack_get_pos(int id, int *x1, int *x2, int *y1, int *y2, int *usr_int);
 
 #endif
