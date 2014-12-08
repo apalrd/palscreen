@@ -12,7 +12,7 @@ PalScreen user interface for PiTFT
 #include "touch.h"
 #include "backlight.h"
 #include "touchstk.h"
-#include "widget.h"
+#include "widgets.h"
 
 
 //Main
