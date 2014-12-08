@@ -202,6 +202,7 @@ int main()
     //Open a file for writing
     FILE *fd = fopen("screen.kal","w");
     //Points file
+    /*
     fprintf(fd,"X=%d Y=%d x=%d y=%d\n",50,50,points_stored[0],points_stored[1]);
     printf("X=%d Y=%d x=%d y=%d rtn=%d\n",50,50,points_stored[0],points_stored[1]);
     fprintf(fd,"X=%d Y=%d x=%d y=%d\n",270,50,points_stored[2],points_stored[3]);
@@ -210,6 +211,34 @@ int main()
     printf("X=%d Y=%d x=%d y=%d\n",50,190,points_stored[4],points_stored[5]);
     fprintf(fd,"X=%d Y=%d x=%d y=%d\n",270,190,points_stored[6],points_stored[7]);
     printf("X=%d Y=%d x=%d y=%d\n",270,190,points_stored[6],points_stored[7]);
+    */
+    
+    //Figure out the slope and offset now
+    //first for X slope
+    float slope = (270-50)/((points_stored[0]-points_stored[4])+(points_stored[2]-points_stored[6])*0.5);
+    //Now find X offset by extending  the slope down to 0
+    float offset = (50 * slope) - (points_stored[0] + points_Stored[2])*0.5;
+    
+    //Now make them fixed point
+    int slope_fxp = (int)(slope * 256.0);
+    int offset_fxp = (int)offset;
+    
+    //Print them both to the console and file
+    printf("X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    fprintf(fd,"X gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    
+    //now for Y
+    float slope = (270-50)/((points_stored[1]-points_stored[3])+(points_stored[5]-points_stored[6])*0.5);
+    //Now find X offset by extending  the slope down to 0
+    float offset = (50 * slope) - (points_stored[1] + points_Stored[3])*0.5;
+    
+    //Now make them fixed point
+    int slope_fxp = (int)(slope * 256.0);
+    int offset_fxp = (int)offset;
+    
+    //Print them both to the console and file
+    printf("Y gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
+    fprintf(fd,"Y gain=%f offset=%f fxpgain=%d fxpoffs=%d\n",slope,offset,slope_fxp,offset_fxp);
     //Close the file
     fclose(fd);
 
