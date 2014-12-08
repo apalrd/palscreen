@@ -59,6 +59,8 @@ void touch_read_kal()
     int gain_temp = 0;
     int offs_temp = 0;
     
+    printf("TOUCH: Opened kal file screen.kal\n");
+    
     //Fscanf in a while loop to get meaningful data
     while(1)
     {
@@ -92,6 +94,8 @@ void touch_read_kal()
             printf("TOUCH: Got end of kal file!\n");
             break;
         }
+        
+        printf("TOUCH: Iteration of the loop\n");
     }
     
     fclose(kal);
