@@ -8,6 +8,7 @@
 #include <sys/ioctl.h>
 #include <linux/input.h>
 #include "touch.h"
+#include "palscreen.h"
 
 
 //File globals
@@ -120,8 +121,13 @@ int touch_get_x()
         return cur_y;
     }
     //Use cals
+#ifndef ROTATE_SCREEN
     int temp = cur_y - cur_offs_x;
     temp = (temp * cur_gain_x) >> 16;
+#else
+    int temp = cur_x - cur_offs_y;
+    temp = (temp * cur_gain_y) >> 16;
+#endif
     return temp;
 }
 int touch_get_y()
@@ -132,8 +138,13 @@ int touch_get_y()
         return cur_x;
     }
     //Use cals
+#ifndef ROTATE_SCREEN
     int temp = cur_x - cur_offs_y;
     temp = (temp * cur_gain_y) >> 16;
+#else
+    int temp = cur_y - cur_offs_x;
+    temp = (temp * cur_gain_x) >> 16;
+#endif
     return temp;
 }
 int touch_get_prs()

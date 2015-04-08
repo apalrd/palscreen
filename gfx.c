@@ -41,7 +41,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <stdio.h>
 #include "gfx.h"
 #include "glcdfont.c"
+#include "palscreen.h"
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
+
+//Compile screen to be flipped in orientation
+//#define ROTATE_SCREEN
+
 
 
 //Global variables
@@ -62,7 +67,6 @@ struct fb_fix_screeninfo finfo;
 struct fb_var_screeninfo vinfo;
 int fb_fd;
 long screensize;
-uint8_t *fbp;	//Front buffer base pointer
 uint8_t *bbp;	//Back buffer base pointer
 
 
@@ -93,17 +97,22 @@ void GFXInit(void)
     
     //Print some info about it
     printf("Screen configured as grey=%d Bits=%d xres=%d yres=%d r=%d g=%d b=%d\n",vinfo.grayscale,vinfo.bits_per_pixel,vinfo.xres,vinfo.yres,vinfo.red.offset,vinfo.green.offset,vinfo.blue.offset);
-    
+    printf("Screen offsets are xoff=%d yoff=%d linesize=%d\n",vinfo.xoffset,vinfo.yoffset, finfo.linelength);
     //Calculate screensize
     screensize = vinfo.yres_virtual * finfo.line_length;
     
     //Setup mapped memory
     bbp = mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb_fd, (off_t)0);
-    fbp = bbp;// + screensize;
     
     //Start panned
     //vinfo.yoffset = screensize;
     //ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
+    
+    //See if screen is rotated
+#ifdef ROTATE_SCREEN
+    WIDTH = 240;
+    HEIGHT = 320;
+#endif
     
     //Setup the GFX vars
     _width = WIDTH;
@@ -115,36 +124,25 @@ void GFXInit(void)
   wrap      = 1;
 }
 
-//Swap the active buffer (draw to the screen)
-void GFXSwapBuffer()
-{
-    /*
-    if (vinfo.yoffset==0)
-        vinfo.yoffset = screensize;
-    else
-        vinfo.yoffset=0;
-    
-    //"Pan" to the back buffer
-    ioctl(fb_fd, FBIOPAN_DISPLAY, &vinfo);
-    
-    //Update the pointer to the back buffer so we don't draw on the front buffer
-    long tmp;
-    tmp=fbp;
-    fbp=bbp;
-    bbp=tmp;
-     */
-}
-
 //Convert a pixel to a color
 uint16_t GFXPixelColor(uint8_t r, uint8_t g, uint8_t b)
 {
     return ((r>>3)<<vinfo.red.offset) | ((g>>2)<<vinfo.green.offset) | ((b>>3)<<vinfo.blue.offset);
 }
-void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
+
+//WARNING: This function does NOT check the bounds of the area it attempts to write to
+//Use the GFXDrawixel function for additional range checking, or use this function
+//inside of a function that checks the bounds first
+inline void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
 {
     //vinfo.bits_per_pixel>>3
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
+#ifdef ROTATE_SCREEN
+    int location = (y+vinfo.xoffset)*2 + (x+vinfo.yoffset) * finfo.line_length;
+#else
+    //Screen 'normal'
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
+#endif
     //bbp[location] = color;
 
     uint16_t *newptr = (bbp + location);
@@ -277,6 +275,7 @@ void GFXDrawLine(int16_t x0, int16_t y0,
 			    int16_t x1, int16_t y1,
 			    uint16_t color)
 {
+    //First check and limit the bounds
     if(x0 >= _width) x0 = _width;
     if(x1 >= _width) x1 = _width;
     if(x0 < 0) x0 = 0;
@@ -365,9 +364,28 @@ void GFXDrawFastHLine(int16_t x, int16_t y,
   //GFXDrawLine(x, y, x+w-1, y, color);
 }
 
-void GFXFillRect(int16_t x, int16_t y, int16_t w, int16_t h,
-			    uint16_t color) {
+//WARNING: This function does NOT check the bounds of the area it attempts to write to
+//Use the GFXDrawFastHLine for bounds checked drawing
+inline void GFXDrawFastHLineRaw(int16_t x, int16_t y,
+                                int16_t w, uint16_t color)
+{
+    uint16_t *location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length + bbp;
+    for(int16_t i = 0;i<w;i++)
+    {
+        *location = color;
+        location++;
+    }
     
+}
+
+void GFXFillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
+{
+    if(x >= _width) x = _width;
+    if(y >= _height) y = _height;
+    if(x < 0) x = 0;
+    if(y < 0) y = 0;
+    if(x+w >= _width) w = _width - x;
+    if(y+h >= _hight) h = _height - y;
   // Update in subclasses if desired!
   for (int16_t i=x; i<x+w; i++) {
     GFXDrawFastVLine(i, y, h, color);
