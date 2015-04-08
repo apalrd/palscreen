@@ -138,7 +138,7 @@ inline void GFXDrawPixelRaw(int16_t x, int16_t y, uint16_t color)
     //vinfo.bits_per_pixel>>3
     //long location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel>>3) + (y+vinfo.yoffset) * finfo.line_length;
 #ifdef ROTATE_SCREEN
-    int location = (y+vinfo.xoffset)*2 + (x+vinfo.yoffset) * finfo.line_length;
+    int location = (y+vinfo.xoffset)*2 + ((WIDTH-x)+vinfo.yoffset) * finfo.line_length;
 #else
     //Screen 'normal'
     int location = (x+vinfo.xoffset)*2 + (y+vinfo.yoffset) * finfo.line_length;
