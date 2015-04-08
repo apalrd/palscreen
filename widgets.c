@@ -68,11 +68,6 @@ void widget_int_btn_btn(int id,struct widget_data_btn *wdata)
     if(wdata->cbk != NULL)
     {
         wdata->cbk(wdata->user_int);
-        printf("WIDGET BUTTON: Calling the users callback\n");
-    }
-    else
-    {
-        printf("WIDGET BUTTON: The users callback is null\n");
     }
     
     id = id;
@@ -142,30 +137,74 @@ void widget_draw_txtbox(int x1, int x2, int y1, int y2, uint16_t color_fg, uint1
 }
 
 //Draw a thermometer (vertical and horizontal versions)
-void widget_draw_thermo_v(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_fg, uint16_t color_bg)
+void widget_draw_thermo_v(int x1, int x2, int y1, int y2, float fill_level, uint16_t color_fg, uint16_t color_bg)
 {
+    //Optimized drawing routines for fill > 1)
+    if(fill_level >= 1)
+    {
+        //Draw only the foreground rectangle
+        GFXFillRect(x1,y1,(x2-x1),(y2-y1),color_fg);
+        //and the box around it is pointless
+        //GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+        //And return
+        return;
+    }
+    
+    //Optimized drawing routine for fill < 0
+    if(fill_level <= 0)
+    {
+        //Draw only the background rectangle
+        GFXFillRect(x1,y1,(x2-x1),(y2-y1),color_bg);
+        //The box around it is not pointless
+        GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+        return;
+    }
     //Calculate partial fill level
-    int partial_fill = ((fill_level)*(y2-y1))>>8;
-    int partial_fill_inv = (y2-y1)-partial_fill;
+    int height = y2 - y1;
+    int partial_fill = fill_level * height;
+    int partial_fill_inv = height-partial_fill;
     
     //Draw the two background rectangles
-    GFXFillRect(x1, y1, (x2-x1), partial_fill, color_fg);
-    GFXFillRect(x1, y1+partial_fill, (x2-x1), partial_fill_inv, color_bg);
+    GFXFillRect(x1, y1+partial_fill_inv, (x2-x1), partial_fill, color_fg);
+    GFXFillRect(x1, y1, (x2-x1), partial_fill_inv, color_bg);
     
     //Draw a box around all of it
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
 }
-void widget_draw_thermo_h(int x1, int x2, int y1, int y2, uint8_t fill_level, uint16_t color_fg, uint16_t color_bg)
+void widget_draw_thermo_h(int x1, int x2, int y1, int y2, float fill_level, uint16_t color_fg, uint16_t color_bg)
 {
+    //Optimized drawing routines for fill > 1)
+    if(fill_level >= 1)
+    {
+        //Draw only the foreground rectangle
+        GFXFillRect(x1,y1,(x2-x1),(y2-y1),color_fg);
+        //and the box around it is pointless
+        //GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+        //And return
+        return;
+    }
+    
+    //Optimized drawing routine for fill < 0
+    if(fill_level <= 0)
+    {
+        //Draw only the background rectangle
+        GFXFillRect(x1,y1,(x2-x1),(y2-y1),color_bg);
+        //The box around it is not pointless
+        GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
+        return;
+    }
+    
     //Calculate partial fill level
-    int partial_fill = ((fill_level)*(x2-x1))>>8;
-    int partial_fill_inv = (x2-x1)-partial_fill;
+    int width = x2 - x1;
+    int partial_fill = fill_level*width;
+    int partial_fill_inv = width - partial_fill;
     
     //Draw the two background rectangles
-    GFXFillRect(x1, y1, partial_fill_inv,(y2-y1), color_bg);
-    GFXFillRect(x1+partial_fill_inv, y1, partial_fill, (y2-y1), color_fg);
+    GFXFillRect(x1, y1, partial_fill,(y2-y1), color_fg);
+    GFXFillRect(x1+partial_fill, y1, partial_fill_inv, (y2-y1), color_bg);
     
     //Draw a box around all of it
     GFXDrawRect(x1, y1, (x2-x1), (y2-y1), color_fg);
 }
+
     
